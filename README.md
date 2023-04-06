@@ -1,3 +1,7 @@
+
+
+## InterVoke
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
@@ -13,11 +17,14 @@
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 
-
-
 ## InterVoke
 
 ## Purpose
+
+API helper that allows to call methods on objects through properties, using the property name as first
+argument. For example, `m.foo 42` (a call to `m.foo()` with *n* = 1 arument) gets translated (and is
+equivalent) to `m 'foo', 42` (a call to `m` with *n* + 1 aruments)
+
 
 ## Notes
 
