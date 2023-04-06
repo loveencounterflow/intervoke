@@ -119,20 +119,5 @@ class Analyzing_attributor extends Attributor
   #---------------------------------------------------------------------------------------------------------
   __nameit: ( name, f ) -> Object.defineProperty f, 'name', { value: name, }; f
 
-#===========================================================================================================
-class Isa extends Analyzing_attributor
-
-  #---------------------------------------------------------------------------------------------------------
-  @__cache: new Map Object.entries
-    null:       ( x ) -> x is null
-    undefined:  ( x ) -> x is undefined
-    boolean:    ( x ) -> ( x is true ) or ( x is false )
-    float:      ( x ) -> Number.isFinite x
-    symbol:     ( x ) -> ( typeof x ) is 'symbol'
-
-  #---------------------------------------------------------------------------------------------------------
-  __create_handler: ( phrase ) ->
-    return ( details ) -> 'Yo'
-
 
 
