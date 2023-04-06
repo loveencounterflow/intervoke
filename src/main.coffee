@@ -9,7 +9,7 @@ GUY                       = require 'guy'
   info
   warn
   urge
-  help }                  = GUY.trm.get_loggers 'INTERTYPE'
+  help }                  = GUY.trm.get_loggers 'INTERVOKE'
 { rpr }                   = GUY.trm
 
 
