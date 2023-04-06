@@ -11,6 +11,7 @@
 - [InterVoke](#intervoke)
 - [Purpose](#purpose)
 - [Motivation](#motivation)
+- [Name](#name)
 - [Glossary](#glossary)
 - [Notes](#notes)
 - [Derived Classes](#derived-classes)
@@ -51,6 +52,12 @@ This can result in very readable APIs, for which `InterVoke` provides the founda
 * providing classes whose instantiations are callable functions (not very difficult but a little tricky)
 * doing property name normalization
 * caching
+
+## Name
+
+The name 'InterVoke' is both in line with my `/^inter[a-z]+$/` line of packages and, on the other hand,
+symbolizes quite nicely that this library is all about intercepting method invocations—turning 'invocations'
+into 'intervocations', in a manner of speaking. Thanks ChatGPT!
 
 
 ## Glossary
