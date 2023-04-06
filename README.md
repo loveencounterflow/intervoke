@@ -9,9 +9,11 @@
 - [InterVoke](#intervoke)
 - [Purpose](#purpose)
 - [Motivation](#motivation)
+- [Glossary](#glossary)
 - [Notes](#notes)
 - [Derived Classes](#derived-classes)
   - [Analyzing Attributor](#analyzing-attributor)
+- [Attribution](#attribution)
 - [To Do](#to-do)
 - [Is Done](#is-done)
 
@@ -50,7 +52,7 @@ This can result in very readable APIs, for which `InterVoke` provides the founda
 * caching
 
 
-## Notes
+## Glossary
 
 * **Attributor**: a `class Atr extends Accessor` that instantiates `atr = new Atr()` as a function which
   allows to be accessed in two ways: classical `atr 'acc', p, q, r...` or compressed `atr.acc p, q, r...`
@@ -65,6 +67,8 @@ This can result in very readable APIs, for which `InterVoke` provides the founda
 * *Alternative Accessors* are all the spelling variants (with multiple underscores, or words separated by
   whitespace) that result in the same NCC.
 
+## Notes
+
 * all methods and other instance properties whose names starts with a double underscore `__` are not proxied
   and returned directly; this allows users to implement functionality in derived classes while keeping the
   system's namespace separated from the instances' proxied accessors.
@@ -73,18 +77,30 @@ This can result in very readable APIs, for which `InterVoke` provides the founda
 
 ### Analyzing Attributor
 
+**TBD**
+
+```coffee
 class Aa extends Analyzing_attributor
 
 aa = new Aa
 resolution = aa
+```
+
+
+
+
+## Attribution
+
+* project name as suggested by [ChatGPT](https://chat.openai.com)
+* project logo as suggested by [Nolibox](https://creator.nolibox.com)
 
 ## To Do
 
 * **[–]** docs
-* **[–]** find a good name
 
 ## Is Done
 
 * **[+]** name generated functions using the NCC
+* **[+]** find a good name
 
 
