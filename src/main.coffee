@@ -50,9 +50,9 @@ class Attributor extends Function
   #---------------------------------------------------------------------------------------------------------
   constructor: ->
     ### Trick to make this work; these are strings containing JS code: ###
-    super '...P', 'return this._me.__do(...P)'
-    @_me        = @bind @
-    return clasz.create_proxy @_me
+    super '...P', 'return this.__me.__do(...P)'
+    @__me = @bind @
+    return clasz.create_proxy @__me
 
   #---------------------------------------------------------------------------------------------------------
   __do: ( P... ) ->
