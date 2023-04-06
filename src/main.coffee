@@ -33,7 +33,7 @@ class Wrong_use_of_abstract_base_class_method extends Guy_error_base_class
 
 
 #===========================================================================================================
-class Attributor extends Function
+@Attributor = class Attributor extends Function
 
   #---------------------------------------------------------------------------------------------------------
   clasz = @
@@ -62,7 +62,7 @@ class Attributor extends Function
 
 
 #===========================================================================================================
-class Analyzing_attributor extends Attributor
+@Analyzing_attributor = class Analyzing_attributor extends Attributor
 
   #---------------------------------------------------------------------------------------------------------
   @__cache: null
