@@ -105,6 +105,10 @@ resolution = aa
 ## To Do
 
 * **[–]** docs
+* **[–]** implement matching property names 'longest first' to allow for overrides that are
+  implementationally simpler than literal translations (eg. in `isa.empty_list x`, it will be simpler to
+  check first for `Array.isArray x`, then for `x.length is 0` instead of dealing with the different ways
+  that emptiness can be detected in JS (`x.length`, `x.size`, ...))
 
 ## Is Done
 
