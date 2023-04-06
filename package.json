@@ -1,6 +1,6 @@
 {
   "name": "intervoke",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "API helper that allows to call methods on objects through properties, using the property name as first argument",
   "main": "lib/main.js",
   "repository": {
