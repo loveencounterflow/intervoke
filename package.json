@@ -1,0 +1,19 @@
+{
+  "name": "intervoke",
+  "version": "0.0.0",
+  "description": "API helper that allows to call methods on objects through properties, using the property name as first argument",
+  "main": "lib/main.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/loveencounterflow/intervoke.git"
+  },
+  "scripts": {
+    "test": "echo see 'https://github.com/loveencounterflow/hengist/tree/master/dev/intervoke'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "guy": "^13.5.0"
+  }
+}
