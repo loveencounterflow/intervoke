@@ -8,6 +8,7 @@
 
 - [InterVoke](#intervoke)
 - [Purpose](#purpose)
+- [Motivation](#motivation)
 - [Notes](#notes)
 - [Derived Classes](#derived-classes)
   - [Analyzing Attributor](#analyzing-attributor)
@@ -22,9 +23,27 @@
 
 ## Purpose
 
-API helper that allows to call methods on objects through properties, using the property name as first
-argument. For example, `m.foo 42` (a call to `m.foo()` with *n* = 1 arument) gets translated (and is
-equivalent) to `m 'foo', 42` (a call to `m` with *n* + 1 aruments)
+JavaScript API helper that allows to call methods on objects through properties, using the property name as
+first argument. For example, `m.foo 42` (a call to `m.foo()` with *n* = 1 arument) gets translated (and is
+equivalent) to `m 'foo', 42` (a call to `m` with *n* + 1 aruments).
+
+## Motivation
+
+I have been using this to build a 'snappi' API for runtime typechecks in JavaScript. Included in this
+package is a class `Analyzing_attributor` which splits property names into words (by looking for spaces and
+underscores), then calls a method producer to retrieve a suitable method for the given phrase, caching
+results on the way so only first-time accesses need to invoke phrase parsing.
+
+Now, phrase parsing (which is outside of the scope of this package and will depend on one's use case) allows
+to detect that eg. a type checker for a property `empty_list` should check that a given argument `x` (as in
+`isa.empty_list x`) should satisfy both `isa.list x` and `x.length is 0`, or that
+`isa.integer_or_numerical_text x` is satisfied when `isa.integer x` is `true` or, alternatively, both
+`isa.text x` and `/[0-9]+/.test x` hold. This can result in very readable APIs, for which `InterVoke` provides
+the foundations, namely,
+
+* providing proxied access to object properties, taking care of all the edge cases
+* providing classes whose instantiations are callable functions (not very difficult but a little tricky)
+
 
 
 ## Notes
