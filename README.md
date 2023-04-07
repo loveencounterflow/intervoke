@@ -109,6 +109,8 @@ resolution = aa
   implementationally simpler than literal translations (eg. in `isa.empty_list x`, it will be simpler to
   check first for `Array.isArray x`, then for `x.length is 0` instead of dealing with the different ways
   that emptiness can be detected in JS (`x.length`, `x.size`, ...))
+* **[–]** can we use instance as the cache instead of using a seperate one? Then one could check for
+  `target` having the property and just return it when found. Maybe use a map or set to simplify lookups.
 
 ## Is Done
 
