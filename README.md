@@ -110,7 +110,11 @@ resolution = aa
   'mynoun', ...`
 * adjectives are declared on the nouns that they can modify (because e.g. `empty` makes only sense when the
   noun describes something that can contain values, and `negative` makes only sense for numbers)
-
+* nouns are turned into functions and made properties (of the same name) of their base object (here shown as
+  `isa` for the sake of exposition); so type `integer` is accessible as mthod `isa.integer()`.
+* adjectives are likewise turned into functions, but are made properties of the nouns they are declared on,
+  so if adjective `positive` is delcared for type `integer`, then its correlated function may be accessed as
+  `isa.integer.positive()` (as well as by `isa.positive_integer()`).
 * `isa.empty_list x`: `isa.list.empty x`, which implictly starts with `isa.list x`
 * `isa.nonempty_list_of_positive_integers x`: `isa.list x`, then `isa.list.nonempty x`, then, for each
   element `e`, `isa.integer.positive e`, which implictly starts with `isa.integer e`
