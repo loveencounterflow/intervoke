@@ -17,6 +17,7 @@
 - [Derived Classes](#derived-classes)
   - [Analyzing Attributor](#analyzing-attributor)
   - [Phrasal Attributor](#phrasal-attributor)
+  - [Sentence Structure Diagram](#sentence-structure-diagram)
 - [Attribution](#attribution)
 - [To Do](#to-do)
 - [Is Done](#is-done)
@@ -103,7 +104,12 @@ resolution = aa
 * words are either
   * nouns like `integer`, `list`, `text`;
   * adjectives like `empty`, `positive`;
-  * or connectives `of` and `or`
+  * or connectives `of` and `or`.
+* The connectives `of` and `or` are built-in, no nouns or adjectives are pre-defined.
+* nouns can be added by `declare()`ing them, as in `d.declare.mynoun ...` or, equivalently, `d.declare
+  'mynoun', ...`
+* adjectives are declared on the nouns that they can modify (because e.g. `empty` makes only sense when the
+  noun describes something that can contain values, and `negative` makes only sense for numbers)
 
 * `isa.empty_list x`: `isa.list.empty x`, which implictly starts with `isa.list x`
 * `isa.nonempty_list_of_positive_integers x`: `isa.list x`, then `isa.list.nonempty x`, then, for each
@@ -112,7 +118,49 @@ resolution = aa
   `isa.text.nonempty x`
 * `or` has lowest precedence so `isa.nonempty_empty_list_or_text x` is satisfied even when `x` is the empty
   string
+* `isa.hinky.dinky.dong x`: holds when both `isa.dong.hinky x` and `isa.dong._dinky x` hold. The call to
+  `isa.dong.hinky x` implicitly calls `isa.dong x`, the call to `isa.dong._dinky x` skips that test.
 
+### Sentence Structure Diagram
+
+```
+┌──────┐ ┌──┐    ┌──────┐ ┌──────┐    ┌──────┐ ┌──┐
+│ adj. │ │n.│    │ adj. │ │ noun │    │ adj. │ │n.│
+│      │ │  │    │      │ │      │    │      │ │  │
+
+nonempty_list_of_positive_integers_or_nonempty_text
+
+│ collection│    │ elements      │    │           │
+│ phrase 1.1│    │ phrase 1.2    │    │           │
+└───────────┘    └───────────────┘    │           │
+│            phrase 1            │    │  phrase 2 │
+└────────────────────────────────┘    └───────────┘
+│                    sentence                     │
+└─────────────────────────────────────────────────┘
+```
+
+* A sentence consists of one ore more (noun) phrases.
+* Multiple phrases can be linked with the connective `or`.
+* `or` has least precedence so whatever has been said in the phrase before it has no effect on the phrase
+  that comes after it.
+* A single noun always comes last in a phrase.
+* A noun may be preceded by one or more adjectives.
+* Sentences that contain one or more undeclared words cause an error.
+* Adjectives that precede a given noun in a phrase must be declared for that noun.
+* A phrase with a noun that is declared to be a collection (a 'collection phrase') may be followed by the
+  connective `of` and a phrase that describes its elements (an 'element phrase').
+* A phrase that follows an `of` phrase to which it is connected with an `or` is understood to describe the
+  'outer' value, not the element value; this is because `or` has lowest priority. Therefore,
+  `list_of_integers_or_text x` holds when `x` is either a list of whole numbers or, alternatively, any
+  string (text).
+* To describe alternatives for elements, declare a custom type: `declare.frobs 'integer_or_text';
+  isa.list_of_frobs x` will hold when all (if any) elements in list `x` are either integers or texts.
+
+<!-- * to describe alternatives for elements, connect element phrases with the connective `or_of`, as in
+  `list_of_integers_or_of_texts x` holds when `x` is a list whose elements are  whole numbers or, alternatively, any
+  string (text). ### TAINT unclear whether each element can be either integer or string, or whether all
+  elements must be either integers or strings. Latter barely useful.
+ -->
 ## Attribution
 
 * project name as suggested by [ChatGPT](https://chat.openai.com)
