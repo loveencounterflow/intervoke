@@ -99,20 +99,24 @@ resolution = aa
 
 ### Phrasal Attributor
 
-* intended for new version of [InterType](https://github.com/loveencounterflow/intertype)
-* derivative of `Analyzing_attributor`
-* words are either
+* Intended for new version of [InterType](https://github.com/loveencounterflow/intertype); the following
+  notes betray that and are written with the use case of building a runtime type checking library in mind.
+* `Phrasal_attributor` is a derivative of `Analyzing_attributor`.
+* Like `Analyzing_attributor`, `Phrasal_attributor` too will split property names into words by splitting on
+  spaces and underscores. Unlike `Analyzing_attributor`, `Phrasal_attributor` assumes a certain grammar for
+  its accessors, here termed 'sentences' and 'phrases'.
+* Words appearing in accessors are recognized as either
   * nouns like `integer`, `list`, `text`;
   * adjectives like `empty`, `positive`;
   * or connectives `of` and `or`.
 * The connectives `of` and `or` are built-in, no nouns or adjectives are pre-defined.
-* nouns can be added by `declare()`ing them, as in `d.declare.mynoun ...` or, equivalently, `d.declare
-  'mynoun', ...`
-* adjectives are declared on the nouns that they can modify (because e.g. `empty` makes only sense when the
-  noun describes something that can contain values, and `negative` makes only sense for numbers)
-* nouns are turned into functions and made properties (of the same name) of their base object (here shown as
+* Nouns can be added by `declare()`ing them, as in `d.declare.mynoun ...` or, equivalently, `d.declare
+  'mynoun', ...`.
+* Adjectives are declared on the nouns that they can modify (because e.g. `empty` makes only sense when the
+  noun describes something that can contain values, and `negative` makes only sense for numbers).
+* Nouns are turned into functions and made properties (of the same name) of their base object (here shown as
   `isa` for the sake of exposition); so type `integer` is accessible as mthod `isa.integer()`.
-* adjectives are likewise turned into functions, but are made properties of the nouns they are declared on,
+* Adjectives are likewise turned into functions, but are made properties of the nouns they are declared on,
   so if adjective `positive` is delcared for type `integer`, then its correlated function may be accessed as
   `isa.integer.positive()` (as well as by `isa.positive_integer()`).
 * `isa.empty_list x`: `isa.list.empty x`, which implictly starts with `isa.list x`
