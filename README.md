@@ -110,6 +110,10 @@ resolution = aa
   * adjectives like `empty`, `positive`;
   * or connectives `of` and `or`.
 * The connectives `of` and `or` are built-in, no nouns or adjectives are pre-defined.
+  * Connectives, notably `or`, may not be used as words in new names (so it's OK to `declare.empty_list` or
+    `declare.integer_text` regardless whether any of `empty`, `list`, `integer`, `text` are already known or
+    not, but `declare.integer_or_text` is forbidden because it contains `or`. Same restriction on use of
+    `of` may be lifted in the future).
 * Nouns can be added by `declare()`ing them, as in `d.declare.mynoun ...` or, equivalently, `d.declare
   'mynoun', ...`.
 * Adjectives are declared on the nouns that they can modify (because e.g. `empty` makes only sense when the
@@ -159,10 +163,12 @@ nonempty_list_of_positive_integers_or_nonempty_text
   connective `of` and a phrase that describes its elements (an 'element phrase').
 * A phrase that follows an `of` phrase to which it is connected with an `or` is understood to describe the
   'outer' value, not the element value; this is because `or` has lowest priority. Therefore,
-  `list_of_integers_or_text x` holds when `x` is either a list of whole numbers or, alternatively, any
-  string (text).
+  `isa.nonempty_list_of_integers_or_text x` holds when `x` is either a list of whole numbers or,
+  alternatively, `x` is a text, possibly the empty string.
 * To describe alternatives for elements, declare a custom type: `declare.frob 'integer_or_text';
-  isa.list_of_frobs x` will hold when all (if any) elements in list `x` are either integers or texts.
+  isa.list_of_frobs x` will hold when all (if any) elements in list `x` are either integers or texts; this
+  is then equivalent to the longer `( isa.list_of_integers x ) or ( isa.list_of_texts x )`.
+
 
 <!-- * to describe alternatives for elements, connect element phrases with the connective `or_of`, as in
   `list_of_integers_or_of_texts x` holds when `x` is a list whose elements are  whole numbers or, alternatively, any
@@ -188,5 +194,17 @@ nonempty_list_of_positive_integers_or_nonempty_text
 
 * **[+]** name generated functions using the NCC
 * **[+]** find a good name
+* **[+]** In the above example where `declare.frob 'integer_or_text'` is used to declare a choice type to be
+  used like `isa.list_of_frobs x`. According to the rules so far, it would indeed be possible to
+  `declare.integer_or_text 'integer_or_text'`, where the tricky part is that this declaration will be the
+  last time that `integer_or_text` is parsed; subsequent uses will only cause a lookup—which means that
+  using `isa.nonempty_list_of_integer_or_text x` will mean something different prior to the declaration than
+  it does following the declaration. Solutions:
+  * **1)** disallow re-using existing names as parts of new names
+  * **2)** less strictly, mandate use of at least one novel word in new names (a word that is not in itself
+    already a known name) (so could use `either_integer_or_text` or `choose_integer_text`)
+  * **3)** disallow using `or` (or other connectives, so `of`) in new names, treating them like PL keywords
+  * solution 3) seems reasonable; adjectives + nouns (`empty_list`) or chains of nouns (`integer_text`) are
+    not the problem, `or` is the problem
 
 
