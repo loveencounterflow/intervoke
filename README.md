@@ -126,7 +126,7 @@ resolution = aa
   `isa.text.nonempty x`
 * `or` has lowest precedence so `isa.nonempty_empty_list_or_text x` is satisfied even when `x` is the empty
   string
-* `isa.hinky.dinky.dong x`: holds when both `isa.dong.hinky x` and `isa.dong._dinky x` hold. The call to
+* `isa.hinky_dinky_dong x`: holds when both `isa.dong.hinky x` and `isa.dong._dinky x` hold. The call to
   `isa.dong.hinky x` implicitly calls `isa.dong x`, the call to `isa.dong._dinky x` skips that test.
 
 ### Sentence Structure Diagram
