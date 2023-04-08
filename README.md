@@ -16,6 +16,7 @@
 - [Notes](#notes)
 - [Derived Classes](#derived-classes)
   - [Analyzing Attributor](#analyzing-attributor)
+  - [Phrasal Attributor](#phrasal-attributor)
 - [Attribution](#attribution)
 - [To Do](#to-do)
 - [Is Done](#is-done)
@@ -85,7 +86,7 @@ into 'intervocations', in a manner of speaking. Thanks ChatGPT!
 
 ### Analyzing Attributor
 
-**TBD**
+<!-- **TBD**
 
 ```coffee
 class Aa extends Analyzing_attributor
@@ -93,9 +94,24 @@ class Aa extends Analyzing_attributor
 aa = new Aa
 resolution = aa
 ```
+ -->
 
+### Phrasal Attributor
 
+* intended for new version of [InterType](https://github.com/loveencounterflow/intertype)
+* derivative of `Analyzing_attributor`
+* words are either
+  * nouns like `integer`, `list`, `text`;
+  * adjectives like `empty`, `positive`;
+  * or connectives `of` and `or`
 
+* `isa.empty_list x`: `isa.list.empty x`, which implictly starts with `isa.list x`
+* `isa.nonempty_list_of_positive_integers x`: `isa.list x`, then `isa.list.nonempty x`, then, for each
+  element `e`, `isa.integer.positive e`, which implictly starts with `isa.integer e`
+* `isa.nonempty_empty_list_or_nonempty_text x`: must satisfy one of `isa.list.nonempty x`,
+  `isa.text.nonempty x`
+* `or` has lowest precedence so `isa.nonempty_empty_list_or_text x` is satisfied even when `x` is the empty
+  string
 
 ## Attribution
 
