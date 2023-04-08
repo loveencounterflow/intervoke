@@ -161,7 +161,7 @@ nonempty_list_of_positive_integers_or_nonempty_text
   'outer' value, not the element value; this is because `or` has lowest priority. Therefore,
   `list_of_integers_or_text x` holds when `x` is either a list of whole numbers or, alternatively, any
   string (text).
-* To describe alternatives for elements, declare a custom type: `declare.frobs 'integer_or_text';
+* To describe alternatives for elements, declare a custom type: `declare.frob 'integer_or_text';
   isa.list_of_frobs x` will hold when all (if any) elements in list `x` are either integers or texts.
 
 <!-- * to describe alternatives for elements, connect element phrases with the connective `or_of`, as in
