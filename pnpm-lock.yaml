@@ -2,8 +2,8 @@ lockfileVersion: '6.0'
 
 dependencies:
   guy:
-    specifier: ^13.5.0
-    version: 13.5.0(acorn-loose@8.3.0)(acorn-walk@8.2.0)(acorn@8.8.2)(astring@1.8.4)(dayjs@1.11.7)(tmp@0.2.1)
+    specifier: ^13.6.0
+    version: 13.6.0(acorn-loose@8.3.0)(acorn-walk@8.2.0)(acorn@8.8.2)(astring@1.8.4)(dayjs@1.11.7)(tmp@0.2.1)
 
 packages:
 
@@ -64,8 +64,8 @@ packages:
       path-is-absolute: 1.0.1
     dev: false
 
-  /guy@13.5.0(acorn-loose@8.3.0)(acorn-walk@8.2.0)(acorn@8.8.2)(astring@1.8.4)(dayjs@1.11.7)(tmp@0.2.1):
-    resolution: {integrity: sha512-GHHY/Ay1RvjQyFfv6giKc/MFGP8RiLYmBYFVHsjuRJ2EQj+RAZfWs1U7wAQF/Vnrdq83f+gEHbrDefnL9Eh+sg==}
+  /guy@13.6.0(acorn-loose@8.3.0)(acorn-walk@8.2.0)(acorn@8.8.2)(astring@1.8.4)(dayjs@1.11.7)(tmp@0.2.1):
+    resolution: {integrity: sha512-xwiwH/L2n0GnpkCKBRfd23bNgNWj3359JU/XjCSy6bZlLHjfXgKrXuDEnJyqjhBG7HWtPyKnatgdxzVRb3Xw6g==}
     peerDependencies:
       acorn: ^8.7.1
       acorn-loose: ^8.3.0
