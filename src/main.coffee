@@ -120,4 +120,10 @@ class Wrong_use_of_abstract_base_class_method extends Guy_error_base_class
   __nameit: ( name, f ) -> Object.defineProperty f, 'name', { value: name, }; f
 
 
+#===========================================================================================================
+@Phrasal_attributor = class Phrasal_attributor extends Analyzing_attributor
+
+  #---------------------------------------------------------------------------------------------------------
+  __declare: ( accessor, handler ) ->
+    debug '^54-1^', { accessor, handler, }
 
