@@ -18,6 +18,7 @@
   - [Analyzing Attributor](#analyzing-attributor)
   - [Phrasal Attributor](#phrasal-attributor)
   - [Sentence Structure Diagram](#sentence-structure-diagram)
+  - [Plural Nouns](#plural-nouns)
 - [Attribution](#attribution)
 - [To Do](#to-do)
 - [Is Done](#is-done)
@@ -145,6 +146,8 @@ nonempty_list_of_positive_integers_or_nonempty_text
 │ collection│    │ elements      │    │           │
 │ phrase 1.1│    │ phrase 1.2    │    │           │
 └───────────┘    └───────────────┘    │           │
+│           │    adjunct         │    │           │
+│           └────────────────────┘    │           │
 │            phrase 1            │    │  phrase 2 │
 └────────────────────────────────┘    └───────────┘
 │                    sentence                     │
@@ -175,6 +178,21 @@ nonempty_list_of_positive_integers_or_nonempty_text
   string (text). ### TAINT unclear whether each element can be either integer or string, or whether all
   elements must be either integers or strings. Latter barely useful.
  -->
+
+### Plural Nouns
+
+Since [English plural rules are far too complex](https://en.wikipedia.org/wiki/English_plurals) to be
+covered by anything less than extensive rule apparatus and long lists of special cases, `Phrasal_attributor`
+uses a simple-minded algorithm (used by Sindre Sorhus' [`plur`](https://github.com/sindresorhus/plur),
+re-implemented as [`GUY.str.pluralize`](https://github.com/loveencounterflow/guy#guystr)) to guess plurals
+of nouns where not explicitly given in the declaration. Use of plurals is only done for readability (so one
+can say `isa.set_of_oxen x` instead of `isa.set_of_ox x`); they are only recognized in elemental subphrases
+(i.e. on the noun that finishes an `*_of_*` adjunct), and even there they are optional and normalized to
+their singular equivalent (because of this, there's a borderline case when you declare both `foo` and `foos`
+as singular nouns and then use a phrase like `list_of_foos` which will be normalized to `list_of_foo`; in
+order to get an adjunct with `foos`, one has to either write `list_of_fooses` or declare `foo` and `foos` to
+not change in the plural, as many English nouns like *deer* and *aricraft* do).
+
 ## Attribution
 
 * project name as suggested by [ChatGPT](https://chat.openai.com)
