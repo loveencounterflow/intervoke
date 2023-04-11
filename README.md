@@ -17,6 +17,7 @@
 - [Derived Classes](#derived-classes)
   - [Analyzing Attributor](#analyzing-attributor)
   - [Phrasal Attributor](#phrasal-attributor)
+  - [Generic and Specific Adjectives](#generic-and-specific-adjectives)
   - [Sentence Structure Diagram](#sentence-structure-diagram)
   - [Plural Nouns](#plural-nouns)
 - [Attribution](#attribution)
@@ -117,8 +118,9 @@ resolution = aa
     `of` may be lifted in the future).
 * Nouns can be added by `declare()`ing them, as in `d.declare.mynoun ...` or, equivalently, `d.declare
   'mynoun', ...`.
-* Adjectives are declared on the nouns that they can modify (because e.g. `empty` makes only sense when the
-  noun describes something that can contain values, and `negative` makes only sense for numbers).
+* Adjectives are either generic or must be declared on the nouns that they can modify (because e.g. `empty`
+  makes only sense when the noun describes something that can contain values, and `negative` makes only
+  sense for numbers).
 * Nouns are turned into functions and made properties (of the same name) of their base object (here shown as
   `isa` for the sake of exposition); so type `integer` is accessible as mthod `isa.integer()`.
 * Adjectives are likewise turned into functions, but are made properties of the nouns they are declared on,
@@ -133,6 +135,17 @@ resolution = aa
   string
 * `isa.hinky_dinky_dong x`: holds when both `isa.dong.hinky x` and `isa.dong._dinky x` hold. The call to
   `isa.dong.hinky x` implicitly calls `isa.dong x`, the call to `isa.dong._dinky x` skips that test.
+
+### Generic and Specific Adjectives
+
+* Generic adjectives can be used with all types and can not be overridden by a type declaration. They always
+  resolve to the same test for values of all types.
+* There's currently a single generic adjective, `optional`, which returns `true` if its argument is `null`
+  or `undefined`; if it does return `true`, evaluation is shortcut at that point (so `isa.optional_list
+  null` is `true` although the argument is not a list). In effect, `isa.optional_T x` behaves like
+  `isa.null_or_undefined_or_T x` and, equivalently, `isa.nothing_or_T x`.
+* All other adjectives are specific to their types and can not be used with a type for which they are not
+  declared; thus, `isa.positive_list x` and `isa.empty_integer x` produce errors at property access time.
 
 ### Sentence Structure Diagram
 
