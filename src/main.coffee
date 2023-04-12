@@ -11,6 +11,7 @@ GUY                       = require 'guy'
   urge
   help }                  = GUY.trm.get_loggers 'INTERVOKE'
 { rpr }                   = GUY.trm
+{ get_base_types }        = require './types'
 
 
 #-----------------------------------------------------------------------------------------------------------
@@ -33,7 +34,7 @@ class Wrong_use_of_abstract_base_class_method extends Guy_error_base_class
 
 
 #===========================================================================================================
-@Attributor = class Attributor extends Function
+@Prompter = class Prompter extends Function
 
   #---------------------------------------------------------------------------------------------------------
   clasz = @
@@ -56,20 +57,22 @@ class Wrong_use_of_abstract_base_class_method extends Guy_error_base_class
 
   #---------------------------------------------------------------------------------------------------------
   __do: ( P... ) ->
-    ### Attributor instances are functions, and the `__do()` method is the code that they execute when being
+    ### Prompter instances are functions, and the `__do()` method is the code that they execute when being
     called. This method should be overridden in derived classes. ###
-    throw new Wrong_use_of_abstract_base_class_method '^Attributor.__do^', @, '__do'
+    throw new Wrong_use_of_abstract_base_class_method '^Prompter.__do^', @, '__do'
 
 
 #===========================================================================================================
-@Analyzing_attributor = class Analyzing_attributor extends Attributor
+@Word_prompter = class Word_prompter extends Prompter
 
   #---------------------------------------------------------------------------------------------------------
   @__cache: null
 
   #---------------------------------------------------------------------------------------------------------
-  constructor: ->
+  constructor: ( cfg ) ->
     super()
+    GUY.props.hide @, 'types', get_base_types()
+    @cfg      = @types.create.word_prompter_cfg cfg
     clasz     = @constructor
     @__cache  = if clasz.__cache? then ( new Map clasz.__cache ) else new Map()
     return undefined
@@ -100,7 +103,7 @@ class Wrong_use_of_abstract_base_class_method extends Guy_error_base_class
   __create_handler: ( phrase ) ->
     ### Given a phrase (the parts of an accessor when split), return a function that takes details as
     arguments and returns a resolution. ###
-    throw new Wrong_use_of_abstract_base_class_method '^Analyzing_attributor.__create_handler^', @, '__create_handler'
+    throw new Wrong_use_of_abstract_base_class_method '^Word_prompter.__create_handler^', @, '__create_handler'
 
   #---------------------------------------------------------------------------------------------------------
   __get_ncc_and_phrase: ( accessor ) ->
@@ -121,7 +124,7 @@ class Wrong_use_of_abstract_base_class_method extends Guy_error_base_class
 
 
 #===========================================================================================================
-@Phrasal_attributor = class Phrasal_attributor extends Analyzing_attributor
+@Phrasal_prompter = class Phrasal_prompter extends Word_prompter
 
   #---------------------------------------------------------------------------------------------------------
   __declare: ( accessor, handler ) ->
