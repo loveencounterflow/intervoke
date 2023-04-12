@@ -15,8 +15,8 @@
 - [Glossary](#glossary)
 - [Notes](#notes)
 - [Derived Classes](#derived-classes)
-  - [Analyzing Attributor](#analyzing-attributor)
-  - [Phrasal Attributor](#phrasal-attributor)
+  - [Word Prompter](#word-prompter)
+  - [Phrasal Prompter](#phrasal-prompter)
   - [Generic and Specific Adjectives](#generic-and-specific-adjectives)
   - [Sentence Structure Diagram](#sentence-structure-diagram)
   - [Plural Nouns](#plural-nouns)
@@ -38,7 +38,7 @@ equivalent) to `m 'foo', 42` (a call to `m` with *n* + 1 aruments).
 ## Motivation
 
 I have been using this to build a 'snappy' API for runtime typechecks in JavaScript. Included in this
-package is a class `Analyzing_attributor` which splits property names into words (by looking for spaces and
+package is a class `Word_prompter` which splits property names into words (by looking for spaces and
 underscores), then calls a method producer to retrieve a suitable method for the given phrase, caching
 results on the way so only first-time accesses need to invoke phrase parsing.
 
@@ -66,14 +66,14 @@ into 'intervocations', in a manner of speaking. Thanks ChatGPT!
 
 ## Glossary
 
-* **Attributor**: a `class Atr extends Accessor` that instantiates `atr = new Atr()` as a function which
-  allows to be accessed in two ways: classical `atr 'acc', p, q, r...` or compressed `atr.acc p, q, r...`
-* **Accessor**: the key used as first argument to access an attributor as in `atr.acc()`, sometimes
+* **Prompter**: a `class Pr extends Prompter` that instantiates `pr = new Pr()` as a function which allows
+  to be accessed in two ways: classical `pr 'acc', p, q, r...` or compressed `pr.acc p, q, r...`
+* **Accessor**: the key used as first argument to access an attributor as in `pr.acc()`, sometimes
   symbolized as `acc`
 * **Phrase**: list of 'words'/keys resulting from splitting the accessor by whitespace and underscores. This
   allows to build complex accessors like `isa.text_or_integer 42` (phrase: `[ 'text', 'or', 'integer', ]`)
-* **Details**: arguments used in a attributor after the accessor. Ex.: In `atr.foo_bar 3, 4, 5`, `foo_bar`
-  is the accessor key, `[ 'foo', 'bar', ]` is the accessor phrase, and `3, 4, 5` are the accessor details.
+* **Details**: arguments used in a attributor after the accessor. Ex.: In `pr.foo_bar 3, 4, 5`, `foo_bar` is
+  the accessor key, `[ 'foo', 'bar', ]` is the accessor phrase, and `3, 4, 5` are the accessor details.
 * **NCC**, *Normalized Accessor*: the `phrase` equivalent of an accessor, the words being joined with single
   `_` underscores. Ex.: All of `empty_text`, `empty text`, `empty_____text` are normalized to `empty_text`.
 * *Alternative Accessors* are all the spelling variants (with multiple underscores, or words separated by
@@ -87,25 +87,25 @@ into 'intervocations', in a manner of speaking. Thanks ChatGPT!
 
 ## Derived Classes
 
-### Analyzing Attributor
+### Word Prompter
 
 <!-- **TBD**
 
 ```coffee
-class Aa extends Analyzing_attributor
+class Aa extends Word_prompter
 
 aa = new Aa
 resolution = aa
 ```
  -->
 
-### Phrasal Attributor
+### Phrasal Prompter
 
 * Intended for new version of [InterType](https://github.com/loveencounterflow/intertype); the following
   notes betray that and are written with the use case of building a runtime type checking library in mind.
-* `Phrasal_attributor` is a derivative of `Analyzing_attributor`.
-* Like `Analyzing_attributor`, `Phrasal_attributor` too will split property names into words by splitting on
-  spaces and underscores. Unlike `Analyzing_attributor`, `Phrasal_attributor` assumes a certain grammar for
+* `Phrasal_prompter` is a derivative of `Word_prompter`.
+* Like `Word_prompter`, `Phrasal_prompter` too will split property names into words by splitting on
+  spaces and underscores. Unlike `Word_prompter`, `Phrasal_prompter` assumes a certain grammar for
   its accessors, here termed 'sentences' and 'phrases'.
 * Words appearing in accessors are recognized as either
   * nouns like `integer`, `list`, `text`;
@@ -195,7 +195,7 @@ nonempty_list_of_positive_integers_or_nonempty_text
 ### Plural Nouns
 
 Since [English plural rules are far too complex](https://en.wikipedia.org/wiki/English_plurals) to be
-covered by anything less than extensive rule apparatus and long lists of special cases, `Phrasal_attributor`
+covered by anything less than extensive rule apparatus and long lists of special cases, `Phrasal_prompter`
 uses a simple-minded algorithm (used by Sindre Sorhus' [`plur`](https://github.com/sindresorhus/plur),
 re-implemented as [`GUY.str.pluralize`](https://github.com/loveencounterflow/guy#guystr)) to guess plurals
 of nouns where not explicitly given in the declaration. Use of plurals is only done for readability (so one
