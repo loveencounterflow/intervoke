@@ -43,10 +43,8 @@ class Wrong_use_of_abstract_base_class_method extends Guy_error_base_class
   @create_proxy: ( x ) -> new Proxy x,
     get: ( target, accessor, receiver ) ->
       return R unless ( R = target[ accessor ] ) is undefined
-      # return target[ accessor ] if ( typeof accessor ) is 'symbol'
       return target[ accessor ] unless ( typeof accessor ) is 'string'
-      return target[ accessor ] if accessor is 'constructor'
-      return target[ accessor ] if accessor.startsWith '__'
+      return target[ accessor ] if accessor.startsWith '_'
       return ( P... ) -> target accessor, P...
 
   #---------------------------------------------------------------------------------------------------------
