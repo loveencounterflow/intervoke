@@ -19,9 +19,7 @@ GUY                       = require 'guy'
   echo
   log     }               = GUY.trm
 { Intertype }             = require 'intertype'
-{ Dataclass }             = require 'datom'
 base_types                = null
-analyzing_attributor_types  = null
 misfit                    = Symbol 'misfit'
 # PATH                      = require 'node:path'
 
