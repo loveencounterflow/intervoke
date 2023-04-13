@@ -67,9 +67,6 @@ class Wrong_use_of_abstract_base_class_method extends Guy_error_base_class
 @Word_prompter = class Word_prompter extends Prompter
 
   #---------------------------------------------------------------------------------------------------------
-  @__cache: null
-
-  #---------------------------------------------------------------------------------------------------------
   constructor: ( cfg ) ->
     super()
     GUY.props.hide @, '__types', get_base_types()
