@@ -42,10 +42,11 @@ class Wrong_use_of_abstract_base_class_method extends Guy_error_base_class
   #---------------------------------------------------------------------------------------------------------
   @create_proxy: ( x ) -> new Proxy x,
     get: ( target, accessor, receiver ) ->
-      # info '^98-1^', rpr accessor
-      return target[ accessor ] if ( typeof accessor ) is 'symbol'
+      return R unless ( R = target[ accessor ] ) is undefined
+      # return target[ accessor ] if ( typeof accessor ) is 'symbol'
+      return target[ accessor ] unless ( typeof accessor ) is 'string'
       return target[ accessor ] if accessor is 'constructor'
-      return target[ accessor ] if accessor.startsWith? and accessor.startsWith '__'
+      return target[ accessor ] if accessor.startsWith '__'
       return ( P... ) -> target accessor, P...
 
   #---------------------------------------------------------------------------------------------------------
@@ -73,8 +74,6 @@ class Wrong_use_of_abstract_base_class_method extends Guy_error_base_class
     super()
     GUY.props.hide @, '__types', get_base_types()
     @cfg      = @__types.create.word_prompter_cfg cfg
-    clasz     = @constructor
-    @__cache  = if clasz.__cache? then ( new Map clasz.__cache ) else new Map()
     return undefined
 
   #---------------------------------------------------------------------------------------------------------
@@ -86,17 +85,17 @@ class Wrong_use_of_abstract_base_class_method extends Guy_error_base_class
     calling `__create_handler()` which must be declared in derived classes. When used with alternative
     accessors, care has been taken to only call `__create_handler()` once and to cache alternative accessors
     along with the normalized one. ###
-    return @__cache.get accessor if @__cache.has accessor
+    debug '^__get_handler@23234^', ( rpr accessor ), @[ accessor ]?
+    return R unless ( R = @[ accessor ] ) is undefined ### NOTE repeat from proxy ###
+    #.......................................................................................................
     [ ncc, phrase  ] = @__get_ncc_and_phrase accessor
+    unless ( R = @[ ncc ] ) is undefined
+      GUY.props.hide @, accessor, R
+      return R
     #.......................................................................................................
-    if @__cache.has ncc
-      R = @__cache.get ncc
-    #.......................................................................................................
-    else
-      R = @__nameit ncc, @__create_handler
-      @__cache.set ncc,       R
-    #.......................................................................................................
-    @__cache.set accessor,  R
+    R = @__nameit ncc, @__create_handler phrase
+    GUY.props.hide @, ncc,      R
+    GUY.props.hide @, accessor, R if accessor isnt ncc
     return R
 
   #---------------------------------------------------------------------------------------------------------
