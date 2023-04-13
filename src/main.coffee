@@ -71,8 +71,8 @@ class Wrong_use_of_abstract_base_class_method extends Guy_error_base_class
   #---------------------------------------------------------------------------------------------------------
   constructor: ( cfg ) ->
     super()
-    GUY.props.hide @, 'types', get_base_types()
-    @cfg      = @types.create.word_prompter_cfg cfg
+    GUY.props.hide @, '__types', get_base_types()
+    @cfg      = @__types.create.word_prompter_cfg cfg
     clasz     = @constructor
     @__cache  = if clasz.__cache? then ( new Map clasz.__cache ) else new Map()
     return undefined
