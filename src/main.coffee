@@ -94,8 +94,8 @@ class Wrong_use_of_abstract_base_class_method extends Guy_error_base_class
       return R
     #.......................................................................................................
     R = @__nameit ncc, @__create_handler phrase
-    GUY.props.hide @, ncc,      R
-    GUY.props.hide @, accessor, R if accessor isnt ncc
+    @__declare ncc,      R
+    @__declare accessor, R if accessor isnt ncc
     return R
 
   #---------------------------------------------------------------------------------------------------------
@@ -115,7 +115,7 @@ class Wrong_use_of_abstract_base_class_method extends Guy_error_base_class
   __declare: ( accessor, handler ) ->
     ### Associate an accessor with a handler method: ###
     ### TAINT check for overwrites ###
-    @__cache.set accessor, handler
+    GUY.props.hide @, accessor, handler
     return null
 
   #---------------------------------------------------------------------------------------------------------
