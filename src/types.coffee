@@ -37,6 +37,11 @@ get_base_types = ->
       registry:     'ivk_registry'
     template:
       registry:     null
+    create: ( x ) ->
+      return x if x? and not not @isa.object x
+      R           = { @registry.word_prompter_cfg.template..., x..., }
+      R.registry ?= new Map()
+      return R
   #.........................................................................................................
   return base_types
 
