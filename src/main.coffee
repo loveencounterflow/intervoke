@@ -85,7 +85,6 @@ class Wrong_use_of_abstract_base_class_method extends Guy_error_base_class
     calling `__create_handler()` which must be declared in derived classes. When used with alternative
     accessors, care has been taken to only call `__create_handler()` once and to cache alternative accessors
     along with the normalized one. ###
-    debug '^__get_handler@23234^', ( rpr accessor ), @[ accessor ]?
     return R unless ( R = @[ accessor ] ) is undefined ### NOTE repeat from proxy ###
     #.......................................................................................................
     [ ncc, phrase  ] = @__get_ncc_and_phrase accessor
