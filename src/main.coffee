@@ -64,6 +64,9 @@ class Not_allowed_to_redeclare extends Guy_error_base_class
     called. This method should be overridden in derived classes. ###
     throw new Wrong_use_of_abstract_base_class_method '^Prompter.__do^', @, '__do'
 
+  #---------------------------------------------------------------------------------------------------------
+  __nameit: ( name, f ) -> Object.defineProperty f, 'name', { value: name, }; f
+
 
 #===========================================================================================================
 @Word_prompter = class Word_prompter extends Prompter
@@ -115,9 +118,6 @@ class Not_allowed_to_redeclare extends Guy_error_base_class
     throw new Not_allowed_to_redeclare '^__declare@1^', accessor if Reflect.has @, accessor
     GUY.props.hide @, accessor, handler
     return null
-
-  #---------------------------------------------------------------------------------------------------------
-  __nameit: ( name, f ) -> Object.defineProperty f, 'name', { value: name, }; f
 
 
 #===========================================================================================================
