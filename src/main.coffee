@@ -57,6 +57,7 @@ class Not_allowed_to_redeclare extends Guy_error_base_class
     super '...P', 'return this.__me.__do(...P)'
     @__me = @bind @
     @__me         = @__nameit '__me', @bind @
+    @__me.__declare accessor, handler for accessor, handler of @.constructor.declare ? {}
     return clasz.create_proxy @__me
 
   #---------------------------------------------------------------------------------------------------------
