@@ -59,6 +59,14 @@ class Not_allowed_to_redeclare extends Guy_error_base_class
     return clasz.create_proxy @__me
 
   #---------------------------------------------------------------------------------------------------------
+  __walk_prototype_chain: ->
+    R = []
+    for object in ( GUY.props.get_prototype_chain @constructor ).reverse()
+      yield object if @__types.is_extension_of object, clasz
+    yield @
+    return null
+
+  #---------------------------------------------------------------------------------------------------------
   __do: ( P... ) ->
     ### Prompter instances are functions, and the `__do()` method is the code that they execute when being
     called. This method should be overridden in derived classes. ###
@@ -77,8 +85,14 @@ class Not_allowed_to_redeclare extends Guy_error_base_class
     GUY.props.hide @, '__types',      get_base_types()
     GUY.props.hide @, '__cfg',        @__types.create.word_prompter_cfg cfg
     GUY.props.hide @, '__accessors',  new Set()
-    @__declare accessor, handler for accessor, handler of @.constructor.declare ? {}
+    @__absorb_declarations()
     return undefined
+
+  #---------------------------------------------------------------------------------------------------------
+  __absorb_declarations: ->
+    for object from @__walk_prototype_chain()
+      continue unless Reflect.has object, 'declare'
+      @__declare accessor, handler for accessor, handler of object.declare
 
   #---------------------------------------------------------------------------------------------------------
   __do: ( accessor, details... ) -> ( @__get_handler accessor ) details...
