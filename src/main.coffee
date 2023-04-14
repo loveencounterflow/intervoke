@@ -32,6 +32,10 @@ class Wrong_use_of_abstract_base_class_method extends Guy_error_base_class
     class_name = instance.constructor.name
     super ref, "not allowed to call method #{rpr method_name} of abstract base class #{rpr class_name}"
 
+#-----------------------------------------------------------------------------------------------------------
+class Not_allowed_to_redeclare extends Guy_error_base_class
+  constructor: ( ref, accessor ) -> super ref, "property #{rpr accessor} already declared"
+
 
 #===========================================================================================================
 @Prompter = class Prompter extends Function
@@ -100,7 +104,7 @@ class Wrong_use_of_abstract_base_class_method extends Guy_error_base_class
 
   #---------------------------------------------------------------------------------------------------------
   __get_ncc_and_phrase: ( accessor ) ->
-    ### Given an accessor (string), return a phrase (list of strings): ###
+    ### Given an accessor (string), return its normalized version (NCC) and the corresponding phrase: ###
     phrase  = accessor.split /[\s_]+/u
     ncc     = phrase.join '_'
     return [ ncc, phrase, ]
@@ -108,7 +112,7 @@ class Wrong_use_of_abstract_base_class_method extends Guy_error_base_class
   #---------------------------------------------------------------------------------------------------------
   __declare: ( accessor, handler ) ->
     ### Associate an accessor with a handler method: ###
-    ### TAINT check for overwrites ###
+    throw new Not_allowed_to_redeclare '^__declare@1^', accessor unless @[ accessor ] is undefined
     GUY.props.hide @, accessor, handler
     return null
 
