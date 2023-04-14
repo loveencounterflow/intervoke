@@ -56,6 +56,7 @@ class Not_allowed_to_redeclare extends Guy_error_base_class
     ### Trick to make this work; these are strings containing JS code: ###
     super '...P', 'return this.__me.__do(...P)'
     @__me = @bind @
+    @__me         = @__nameit '__me', @bind @
     return clasz.create_proxy @__me
 
   #---------------------------------------------------------------------------------------------------------
