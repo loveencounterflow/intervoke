@@ -46,7 +46,7 @@ class Not_allowed_to_redeclare extends Guy_error_base_class
   #---------------------------------------------------------------------------------------------------------
   @create_proxy: ( x ) -> new Proxy x,
     get: ( target, accessor, receiver ) ->
-      return R unless ( R = target[ accessor ] ) is undefined
+      return target[ accessor ] if Reflect.has target, accessor
       return target[ accessor ] unless ( typeof accessor ) is 'string'
       return target[ accessor ] if accessor.startsWith '_'
       return ( P... ) -> target accessor, P...
@@ -112,7 +112,7 @@ class Not_allowed_to_redeclare extends Guy_error_base_class
   #---------------------------------------------------------------------------------------------------------
   __declare: ( accessor, handler ) ->
     ### Associate an accessor with a handler method: ###
-    throw new Not_allowed_to_redeclare '^__declare@1^', accessor unless @[ accessor ] is undefined
+    throw new Not_allowed_to_redeclare '^__declare@1^', accessor if Reflect.has @, accessor
     GUY.props.hide @, accessor, handler
     return null
 
