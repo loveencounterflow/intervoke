@@ -74,8 +74,8 @@ class Not_allowed_to_redeclare extends Guy_error_base_class
   #---------------------------------------------------------------------------------------------------------
   constructor: ( cfg ) ->
     super()
-    GUY.props.hide @, '__types', get_base_types()
-    @__cfg = @__types.create.word_prompter_cfg cfg
+    GUY.props.hide @, '__types',      get_base_types()
+    GUY.props.hide @, '__cfg',        @__types.create.word_prompter_cfg cfg
     GUY.props.hide @, '__accessors',  new Set()
     @__declare accessor, handler for accessor, handler of @.constructor.declare ? {}
     return undefined
