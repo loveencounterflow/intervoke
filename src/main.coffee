@@ -55,9 +55,7 @@ class Not_allowed_to_redeclare extends Guy_error_base_class
   constructor: ->
     ### Trick to make this work; these are strings containing JS code: ###
     super '...P', 'return this.__me.__do(...P)'
-    @__me = @bind @
     @__me         = @__nameit '__me', @bind @
-    @__me.__declare accessor, handler for accessor, handler of @.constructor.declare ? {}
     return clasz.create_proxy @__me
 
   #---------------------------------------------------------------------------------------------------------
@@ -78,6 +76,8 @@ class Not_allowed_to_redeclare extends Guy_error_base_class
     super()
     GUY.props.hide @, '__types', get_base_types()
     @__cfg = @__types.create.word_prompter_cfg cfg
+    GUY.props.hide @, '__accessors',  new Set()
+    @__declare accessor, handler for accessor, handler of @.constructor.declare ? {}
     return undefined
 
   #---------------------------------------------------------------------------------------------------------
