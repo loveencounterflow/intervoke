@@ -47,7 +47,7 @@ class Not_allowed_to_redeclare extends Guy_error_base_class
   @create_proxy: ( x ) -> new Proxy x,
     get: ( target, accessor, receiver ) ->
       return target[ accessor ] if Reflect.has target, accessor
-      return target[ accessor ] unless ( typeof accessor ) is 'string'
+      return target[ accessor ] if ( typeof accessor ) isnt 'string'
       return target[ accessor ] if accessor.startsWith '_'
       return ( P... ) -> target accessor, P...
 
