@@ -133,6 +133,7 @@ class Not_allowed_to_redeclare extends Guy_error_base_class
     ### Associate an accessor with a handler method: ###
     throw new Not_allowed_to_redeclare '^__declare@1^', accessor if Reflect.has @, accessor
     @__accessors.add accessor
+    @__nameit accessor, handler
     GUY.props.hide @, accessor, handler
     return null
 
