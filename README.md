@@ -89,6 +89,8 @@ into 'intervocations', in a manner of speaking. Thanks ChatGPT!
 
 ### Word Prompter
 
+* set class property `declare` to an object with methods that will be `__declare()`d on initialisation
+
 <!-- **TBD**
 
 ```coffee
@@ -220,6 +222,7 @@ not change in the plural, as many English nouns like *deer* and *aricraft* do).
   that emptiness can be detected in JS (`x.length`, `x.size`, ...))
 * **[–]** can we use instance as the cache instead of using a seperate one? Then one could check for
   `target` having the property and just return it when found. Maybe use a map or set to simplify lookups.
+* **[–]** collect all declarations in the prototype chain
 
 ## Is Done
 
