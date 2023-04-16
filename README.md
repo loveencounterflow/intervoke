@@ -89,17 +89,13 @@ into 'intervocations', in a manner of speaking. Thanks ChatGPT!
 
 ### Word Prompter
 
+* In it self probably not a very useful class.
+* It serves a base class for [`Phrasal_prompter`](#phrasal-prompter).
+* All one can do is declaring functions either via the `declare` class property or the (private)
+  `__declare()` method.
 * set class property `declare` to an object with methods that will be `__declare()`d on initialisation
+* Any access to non-declared properties will cause an error.
 
-<!-- **TBD**
-
-```coffee
-class Aa extends Word_prompter
-
-aa = new Aa
-resolution = aa
-```
- -->
 
 ### Phrasal Prompter
 
