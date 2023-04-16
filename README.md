@@ -32,9 +32,7 @@
 
 ## Purpose
 
-JavaScript API helper that allows to call methods on objects through properties, using the property name as
-first argument. For example, `m.foo 42` (a call to `m.foo()` with *n* = 1 arument) gets translated (and is
-equivalent) to `m 'foo', 42` (a call to `m` with *n* + 1 aruments).
+JavaScript API helper that allows to call methods on objects through properties.
 
 ## Motivation
 
@@ -255,9 +253,6 @@ not change in the plural, as many English nouns like *deer* and *aricraft* do).
   implementationally simpler than literal translations (eg. in `isa.empty_list x`, it will be simpler to
   check first for `Array.isArray x`, then for `x.length is 0` instead of dealing with the different ways
   that emptiness can be detected in JS (`x.length`, `x.size`, ...))
-* **[–]** can we use instance as the cache instead of using a seperate one? Then one could check for
-  `target` having the property and just return it when found. Maybe use a map or set to simplify lookups.
-* **[–]** collect all declarations in the prototype chain
 
 ## Is Done
 
@@ -275,5 +270,9 @@ not change in the plural, as many English nouns like *deer* and *aricraft* do).
   * **3)** disallow using `or` (or other connectives, so `of`) in new names, treating them like PL keywords
   * solution 3) seems reasonable; adjectives + nouns (`empty_list`) or chains of nouns (`integer_text`) are
     not the problem, `or` is the problem
+* **[+]** can we use instance as the cache instead of using a seperate one? Then one could check for
+  `target` having the property and just return it when found. Maybe use a map or set to simplify lookups.
+* **[+]** collect all declarations in the prototype chain
+* **[+]** do not return instances-as-functions as it is a useless complication
 
 
