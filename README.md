@@ -228,7 +228,7 @@ ast           = { alternatives, optional: true, }
 
 Since [English plural rules are far too complex](https://en.wikipedia.org/wiki/English_plurals) to be
 covered by anything less than extensive rule apparatus and long lists of special cases, `Phrasal_prompter`
-uses a simple-minded algorithm (used by Sindre Sorhus' [`plur`](https://github.com/sindresorhus/plur),
+uses a simple-minded algorithm (copied from [Sindre Sorhus' `plur`](https://github.com/sindresorhus/plur),
 re-implemented as [`GUY.str.pluralize`](https://github.com/loveencounterflow/guy#guystr)) to guess plurals
 of nouns where not explicitly given in the declaration. Use of plurals is only done for readability (so one
 can say `isa.set_of_oxen x` instead of `isa.set_of_ox x`); they are only recognized in elemental subphrases
@@ -242,6 +242,7 @@ not change in the plural, as many English nouns like *deer* and *aricraft* do).
 
 * project name as suggested by [ChatGPT](https://chat.openai.com)
 * project logo as suggested by [Nolibox](https://creator.nolibox.com)
+* plural guessing algorithm copied from [Sindre Sorhus' `plur`](https://github.com/sindresorhus/plur)
 
 ## To Do
 
