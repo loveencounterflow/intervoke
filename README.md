@@ -69,14 +69,12 @@ into 'intervocations', in a manner of speaking. Thanks ChatGPT!
   to be accessed in two ways: classical `pr 'acc', p, q, r...` or compressed `pr.acc p, q, r...`
 * **Accessor**: the key used as first argument to access an attributor as in `pr.acc()`, sometimes
   symbolized as `acc`
+<!--
 * **Phrase**: list of 'words'/keys resulting from splitting the accessor by whitespace and underscores. This
   allows to build complex accessors like `isa.text_or_integer 42` (phrase: `[ 'text', 'or', 'integer', ]`)
+ -->
 * **Details**: arguments used in a attributor after the accessor. Ex.: In `pr.foo_bar 3, 4, 5`, `foo_bar` is
   the accessor key, `[ 'foo', 'bar', ]` is the accessor phrase, and `3, 4, 5` are the accessor details.
-* **NCC**, *Normalized Accessor*: the `phrase` equivalent of an accessor, the words being joined with single
-  `_` underscores. Ex.: All of `empty_text`, `empty text`, `empty_____text` are normalized to `empty_text`.
-* *Alternative Accessors* are all the spelling variants (with multiple underscores, or words separated by
-  whitespace) that result in the same NCC.
 
 ## Notes
 
@@ -274,5 +272,8 @@ not change in the plural, as many English nouns like *deer* and *aricraft* do).
   `target` having the property and just return it when found. Maybe use a map or set to simplify lookups.
 * **[+]** collect all declarations in the prototype chain
 * **[+]** do not return instances-as-functions as it is a useless complication
+* **[+]** do not use phrase normalization as it is expendible. If anything, one could later support a method
+  to translate 'natural texts' like `'validate that x is an integer or a text of digits'` into very similar API calls
+  like `validate.integer_or_text_of_digits x`
 
 
