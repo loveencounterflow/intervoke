@@ -205,9 +205,13 @@ nonempty_list_of_positive_integers_or_nonempty_text
 * Each clause
   * `noun` (which names the type);
   * zero or more `adjectives`, and
-  * one optional `elements` sub-clause which in itself is a clause and may have its own `elements`
-    sub-clause.
+  * one optional `elements` sub-clause (initiated by the `of` connective) which in itself is a clause and
+    may have its own `elements` sub-clause.
 * `optional` is `true` if any alternative clause had optional in it, and `false` otherwise.
+
+> *Note* we do not currently support alternatives in `elements` sub-clauses; if that should be implemented,
+> then the `elements` property would become a list of alternatives instead of a single clause.
+
 
 ```js
 element_clause = {
