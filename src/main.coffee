@@ -37,12 +37,16 @@ class Not_allowed_to_redeclare extends Guy_error_base_class
   constructor: ( ref, accessor ) -> super ref, "property #{rpr accessor} already declared"
 
 #-----------------------------------------------------------------------------------------------------------
+class Unknown_accessor extends Guy_error_base_class
+  constructor: ( ref, accessor ) -> super ref, "property #{rpr accessor} is unknown"
+
+#-----------------------------------------------------------------------------------------------------------
 class Not_allowed_to_use_undeclared extends Guy_error_base_class
   constructor: ( ref, accessor ) -> super ref, "wrong use of undeclared property #{rpr accessor}"
 
 
 #===========================================================================================================
-@Prompter = class Prompter extends Function
+@Prompter = class Prompter
 
   #---------------------------------------------------------------------------------------------------------
   clasz = @
@@ -53,14 +57,12 @@ class Not_allowed_to_use_undeclared extends Guy_error_base_class
       return target[ accessor ] if Reflect.has target, accessor
       return target[ accessor ] if ( typeof accessor ) isnt 'string'
       return target[ accessor ] if accessor.startsWith '_'
-      return ( P... ) -> target accessor, P...
+      return ( target.__get_handler accessor ) if Reflect.has target, '__get_handler'
+      throw new Unknown_accessor '^Prompter.proxy.get^', accessor
 
   #---------------------------------------------------------------------------------------------------------
   constructor: ->
-    ### Trick to make this work; these are strings containing JS code: ###
-    super '...P', 'return this.__me.__do(...P)'
-    @__me         = @__nameit '__me', @bind @
-    return clasz.create_proxy @__me
+    return clasz.create_proxy @
 
   #---------------------------------------------------------------------------------------------------------
   __walk_prototype_chain: ->
@@ -69,12 +71,6 @@ class Not_allowed_to_use_undeclared extends Guy_error_base_class
       yield object if @__types.is_extension_of object, clasz
     yield @
     return null
-
-  #---------------------------------------------------------------------------------------------------------
-  __do: ( P... ) ->
-    ### Prompter instances are functions, and the `__do()` method is the code that they execute when being
-    called. This method should be overridden in derived classes. ###
-    throw new Wrong_use_of_abstract_base_class_method '^Prompter.__do^', @, '__do'
 
   #---------------------------------------------------------------------------------------------------------
   __nameit: ( name, f ) -> Object.defineProperty f, 'name', { value: name, }; f
@@ -97,10 +93,6 @@ class Not_allowed_to_use_undeclared extends Guy_error_base_class
     for object from @__walk_prototype_chain()
       continue unless Reflect.has object, 'declare'
       @__declare accessor, handler for accessor, handler of object.declare
-
-  #---------------------------------------------------------------------------------------------------------
-  __do: ( accessor, details... ) ->
-    throw new Not_allowed_to_use_undeclared '^__do@1^', accessor
 
   #---------------------------------------------------------------------------------------------------------
   __get_ncc_and_phrase: ( accessor ) ->
