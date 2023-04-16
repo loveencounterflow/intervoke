@@ -19,7 +19,7 @@
   - [Phrasal Prompter](#phrasal-prompter)
   - [Generic and Specific Adjectives](#generic-and-specific-adjectives)
   - [Sentence Structure Diagram](#sentence-structure-diagram)
-  - [Data Structure](#data-structure)
+  - [AST Data Structure](#ast-data-structure)
   - [Plural Nouns](#plural-nouns)
 - [Attribution](#attribution)
 - [To Do](#to-do)
@@ -197,7 +197,7 @@ nonempty_list_of_positive_integers_or_nonempty_text
   elements must be either integers or strings. Latter barely useful.
  -->
 
-### Data Structure
+### AST Data Structure
 
 * An AST is an object with a two properties, `alternatives` and `optional`.
 * `alternatives` is a non-empty list of `or` clauses ('alternatives'); in case no `or` was used, the list
