@@ -19,6 +19,7 @@
   - [Phrasal Prompter](#phrasal-prompter)
   - [Generic and Specific Adjectives](#generic-and-specific-adjectives)
   - [Sentence Structure Diagram](#sentence-structure-diagram)
+  - [Data Structure](#data-structure)
   - [Plural Nouns](#plural-nouns)
 - [Attribution](#attribution)
 - [To Do](#to-do)
@@ -165,12 +166,18 @@ nonempty_list_of_positive_integers_or_nonempty_text
 └─────────────────────────────────────────────────┘
 ```
 
-* A sentence consists of one ore more (noun) phrases.
-* Multiple phrases can be linked with the connective `or`.
+* A sentence consists of one ore more alternative (noun) phrases.
+* Multiple alternatives can be linked with the connective `or`.
 * `or` has least precedence so whatever has been said in the phrase before it has no effect on the phrase
   that comes after it.
 * A single noun always comes last in a phrase.
 * A noun may be preceded by one or more adjectives.
+* A list of adjectives may start with the special global adjective `optional`, which indicates that a value
+  of `null` or `undefined` will satisfy the condition. Since `optional` vlaues are essentially 'typeless' in
+  the sense that a `null` value could stand in for any kind of missing value (much like an empty list
+  satisfies both `empty_list_of_strings` and `empty_list_of_numbers`), an `optional` present in *any*
+  alternative makes the *entire* compound optional, so there's no difference between
+  `optional_text_or_float`, `text_or_optional_float`, and `optional_text_or_optional_float`.
 * Sentences that contain one or more undeclared words cause an error.
 * Adjectives that precede a given noun in a phrase must be declared for that noun.
 * A phrase with a noun that is declared to be a collection (a 'collection phrase') may be followed by the
@@ -189,6 +196,33 @@ nonempty_list_of_positive_integers_or_nonempty_text
   string (text). ### TAINT unclear whether each element can be either integer or string, or whether all
   elements must be either integers or strings. Latter barely useful.
  -->
+
+### Data Structure
+
+* An AST is an object with a two properties, `alternatives` and `optional`.
+* `alternatives` is a non-empty list of `or` clauses ('alternatives'); in case no `or` was used, the list
+  will hold a single clause.
+* Each clause
+  * `noun` (which names the type);
+  * zero or more `adjectives`, and
+  * one optional `elements` sub-clause which in itself is a clause and may have its own `elements`
+    sub-clause.
+* `optional` is `true` if any alternative clause had optional in it, and `false` otherwise.
+
+```js
+element_clause = {
+  noun:         'integer',
+  adjectives:   [ 'positive0', ],
+  elements:     null, }
+
+clause = {
+  noun:         'list',
+  adjectives:   [ 'nonempty', ],
+  elements:     element_clause, }
+
+alternatives  = [ clause, ]
+ast           = { alternatives, optional: true, }
+```
 
 ### Plural Nouns
 
