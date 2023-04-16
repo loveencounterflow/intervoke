@@ -36,6 +36,10 @@ class Wrong_use_of_abstract_base_class_method extends Guy_error_base_class
 class Not_allowed_to_redeclare extends Guy_error_base_class
   constructor: ( ref, accessor ) -> super ref, "property #{rpr accessor} already declared"
 
+#-----------------------------------------------------------------------------------------------------------
+class Not_allowed_to_use_undeclared extends Guy_error_base_class
+  constructor: ( ref, accessor ) -> super ref, "wrong use of undeclared property #{rpr accessor}"
+
 
 #===========================================================================================================
 @Prompter = class Prompter extends Function
@@ -95,8 +99,8 @@ class Not_allowed_to_redeclare extends Guy_error_base_class
       @__declare accessor, handler for accessor, handler of object.declare
 
   #---------------------------------------------------------------------------------------------------------
-  __do: ( accessor, details... ) -> ( @__get_handler accessor ) details...
-
+  __do: ( accessor, details... ) ->
+    throw new Not_allowed_to_use_undeclared '^__do@1^', accessor
 
   #---------------------------------------------------------------------------------------------------------
   __get_ncc_and_phrase: ( accessor ) ->
