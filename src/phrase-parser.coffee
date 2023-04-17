@@ -1,0 +1,122 @@
+
+
+'use strict'
+
+
+
+#===========================================================================================================
+GUY                       = require 'guy'
+{ debug
+  info
+  warn
+  urge
+  help }                  = GUY.trm.get_loggers 'INTERVOKE/PROMPT-PARSER'
+{ rpr }                   = GUY.trm
+{ get_base_types }        = require './types'
+
+
+
+vocabulary  =
+  of:       { role: 'of',         }
+  or:       { role: 'or',         }
+  optional: { role: 'optional',   }
+  #.......................................................................................................
+  empty:    { role: 'adjective',  }
+  nonempty: { role: 'adjective',  }
+  positive: { role: 'adjective',  }
+  negative: { role: 'adjective',  }
+  #.......................................................................................................
+  text:     { role: 'noun', adjectives: [ 'empty', 'nonempty',      ], }
+  list:     { role: 'noun', adjectives: [ 'empty', 'nonempty',      ], }
+  integer:  { role: 'noun', adjectives: [ 'positive', 'negative',   ], }
+
+
+#===========================================================================================================
+@Phrase_parser = class Phrase_parser
+
+  #---------------------------------------------------------------------------------------------------------
+  _walk_alternative_phrases: ( sentence ) ->
+    ### assuming no empty strings ###
+    phrase    = []
+    for word in sentence
+      if word is 'or'
+        yield phrase
+        phrase = []
+        continue
+      phrase.push word
+    yield phrase
+    return null
+
+  #---------------------------------------------------------------------------------------------------------
+  walk_alternative_phrases: ( words ) ->
+    for phrase from @_walk_alternative_phrases words
+      sentence = words.join ' '
+      throw new Error "empty alternative clause in sentence #{rpr sentence}" if phrase.length is 0
+      yield phrase
+    return null
+
+  #---------------------------------------------------------------------------------------------------------
+  _get_vocabulary_entry: ( phrase, word, role = null ) ->
+    unless ( R = vocabulary[ word ] )?
+      phrase_txt = phrase.join '_'
+      throw new Error "word #{rpr word} in phrase #{rpr phrase_txt} is unknown"
+    if role? and R.role isnt role
+      phrase_txt = phrase.join '_'
+      throw new Error "expected word #{rpr word} in phrase #{rpr phrase_txt} to have role #{rpr role} but is declared to be #{rpr R.role}"
+    return R
+
+  #---------------------------------------------------------------------------------------------------------
+  _get_adjectives: ( ast, phrase ) ->
+    R = []
+    for adjective, idx in phrase
+      break if idx >= phrase.length - 1
+      if adjective is 'optional'
+        unless idx is 0
+          phrase_txt = phrase.join '_'
+          throw new Error "expected 'optional' to occur as first word in phrase, got #{rpr phrase_txt}"
+        ast.optional = true
+        continue
+      @_get_vocabulary_entry phrase, adjective, 'adjective'
+      R.push adjective
+      return R
+
+  #---------------------------------------------------------------------------------------------------------
+  parse: ( sentence ) ->
+    words           = sentence.split '_'
+    element_clauses = @_find_element_clauses words
+    # debug '^99-1^', element_clauses
+    alternatives    = []
+    R               = { alternatives, optional: false, }
+    for phrase from @walk_alternative_phrases words
+      #.....................................................................................................
+      noun          = phrase.at -1
+      noun_entry    = @_get_vocabulary_entry phrase, noun, 'noun'
+      #.....................................................................................................
+      ### NOTE not entirely correct, must look for 'of' ###
+      adjectives    = @_get_adjectives R, phrase
+      alternative   = { noun, adjectives, }
+      alternatives.push alternative
+    return R
+
+  #---------------------------------------------------------------------------------------------------------
+  _find_all: ( list, value ) ->
+    ### TAINT comments to https://stackoverflow.com/a/20798567/7568091 suggest for-loop may be faster ###
+    R   = []
+    idx = -1
+    R.push idx while ( idx = list.indexOf value, idx + 1 ) > -1
+    return R
+
+  #---------------------------------------------------------------------------------------------------------
+  _find_element_clauses: ( words, clause = null ) ->
+    clause         ?= {}
+    clause.phrase  ?= []
+    for word, idx in words
+      if word is 'of'
+        clause.elements = @_find_element_clauses words[ idx + 1 .. ]
+        return clause
+      clause.phrase.push word
+    return clause
+
+
+
+
