@@ -35,7 +35,7 @@ vocabulary  =
 @Phrase_parser = class Phrase_parser
 
   #---------------------------------------------------------------------------------------------------------
-  _walk_alternative_phrases: ( sentence ) ->
+  _$walk_alternative_phrases: ( sentence ) ->
     ### assuming no empty strings ###
     phrase    = []
     for word in sentence
@@ -48,8 +48,8 @@ vocabulary  =
     return null
 
   #---------------------------------------------------------------------------------------------------------
-  walk_alternative_phrases: ( words ) ->
-    for phrase from @_walk_alternative_phrases words
+  _walk_alternative_phrases: ( words ) ->
+    for phrase from @_$walk_alternative_phrases words
       sentence = words.join ' '
       throw new Error "empty alternative clause in sentence #{rpr sentence}" if phrase.length is 0
       yield phrase
@@ -87,7 +87,7 @@ vocabulary  =
     # debug '^99-1^', element_clauses
     alternatives    = []
     R               = { alternatives, optional: false, }
-    for phrase from @walk_alternative_phrases words
+    for phrase from @_walk_alternative_phrases words
       #.....................................................................................................
       noun          = phrase.at -1
       noun_entry    = @_get_vocabulary_entry phrase, noun, 'noun'
