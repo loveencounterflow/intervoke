@@ -35,6 +35,24 @@ vocabulary  =
 @Phrase_parser = class Phrase_parser
 
   #---------------------------------------------------------------------------------------------------------
+  parse: ( sentence ) ->
+    words           = sentence.split '_'
+    element_clauses = @_find_element_clauses words
+    # debug '^99-1^', element_clauses
+    alternatives    = []
+    R               = { alternatives, optional: false, }
+    for phrase from @_walk_alternative_phrases words
+      #.....................................................................................................
+      noun          = phrase.at -1
+      noun_entry    = @_get_vocabulary_entry phrase, noun, 'noun'
+      #.....................................................................................................
+      ### NOTE not entirely correct, must look for 'of' ###
+      adjectives    = @_get_adjectives R, phrase
+      alternative   = { noun, adjectives, }
+      alternatives.push alternative
+    return R
+
+  #---------------------------------------------------------------------------------------------------------
   _$walk_alternative_phrases: ( sentence ) ->
     ### assuming no empty strings ###
     phrase    = []
@@ -80,31 +98,13 @@ vocabulary  =
       R.push adjective
       return R
 
-  #---------------------------------------------------------------------------------------------------------
-  parse: ( sentence ) ->
-    words           = sentence.split '_'
-    element_clauses = @_find_element_clauses words
-    # debug '^99-1^', element_clauses
-    alternatives    = []
-    R               = { alternatives, optional: false, }
-    for phrase from @_walk_alternative_phrases words
-      #.....................................................................................................
-      noun          = phrase.at -1
-      noun_entry    = @_get_vocabulary_entry phrase, noun, 'noun'
-      #.....................................................................................................
-      ### NOTE not entirely correct, must look for 'of' ###
-      adjectives    = @_get_adjectives R, phrase
-      alternative   = { noun, adjectives, }
-      alternatives.push alternative
-    return R
-
-  #---------------------------------------------------------------------------------------------------------
-  _find_all: ( list, value ) ->
-    ### TAINT comments to https://stackoverflow.com/a/20798567/7568091 suggest for-loop may be faster ###
-    R   = []
-    idx = -1
-    R.push idx while ( idx = list.indexOf value, idx + 1 ) > -1
-    return R
+  # #---------------------------------------------------------------------------------------------------------
+  # _find_all: ( list, value ) ->
+  #   ### TAINT comments to https://stackoverflow.com/a/20798567/7568091 suggest for-loop may be faster ###
+  #   R   = []
+  #   idx = -1
+  #   R.push idx while ( idx = list.indexOf value, idx + 1 ) > -1
+  #   return R
 
   #---------------------------------------------------------------------------------------------------------
   _find_element_clauses: ( words ) ->
