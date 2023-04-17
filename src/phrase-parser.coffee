@@ -107,15 +107,14 @@ vocabulary  =
     return R
 
   #---------------------------------------------------------------------------------------------------------
-  _find_element_clauses: ( words, clause = null ) ->
-    clause         ?= {}
-    clause.phrase  ?= []
+  _find_element_clauses: ( words ) ->
+    R = { phrase: [], }
     for word, idx in words
       if word is 'of'
-        clause.elements = @_find_element_clauses words[ idx + 1 .. ]
-        return clause
-      clause.phrase.push word
-    return clause
+        R.elements = @_find_element_clauses words[ idx + 1 .. ]
+        return R
+      R.phrase.push word
+    return R
 
 
 
