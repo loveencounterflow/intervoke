@@ -116,6 +116,17 @@ vocabulary  =
       R.phrase.push word
     return R
 
+  #---------------------------------------------------------------------------------------------------------
+  _walk_element_clauses: ( words ) ->
+    clause = @_find_element_clauses words
+    yield from @_$walk_element_clauses clause
+    return null
+
+  #---------------------------------------------------------------------------------------------------------
+  _$walk_element_clauses: ( clause ) ->
+    yield clause
+    yield from @_$walk_element_clauses clause.elements if clause.elements?
+    return null
 
 
 
