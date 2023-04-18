@@ -100,14 +100,6 @@ vocabulary  =
       R.push adjective
       return R
 
-  # #---------------------------------------------------------------------------------------------------------
-  # _find_all: ( list, value ) ->
-  #   ### TAINT comments to https://stackoverflow.com/a/20798567/7568091 suggest for-loop may be faster ###
-  #   R   = []
-  #   idx = -1
-  #   R.push idx while ( idx = list.indexOf value, idx + 1 ) > -1
-  #   return R
-
   #---------------------------------------------------------------------------------------------------------
   _find_element_clauses: ( words ) ->
     R = { phrase: [], }
@@ -130,5 +122,19 @@ vocabulary  =
     yield from @_$walk_element_clauses clause.elements if clause.elements?
     return null
 
+  # #---------------------------------------------------------------------------------------------------------
+  # #.........................................................................................................
+  ### NOTE likely not to be used: ###
+  # T?.eq ( pp._find_all [ 'nonempty', 'list', 'of', 'list', 'of', 'text', ], 'of'        ), [ 2, 4 ]
+  # T?.eq ( pp._find_all [ 'a', 'b', 'c', 'd', ], 'b'                                     ), [ 1 ]
+  # T?.eq ( pp._find_all [ 'a', 'b', 'c', 'd', ], 'd'                                     ), [ 3 ]
+  # T?.eq ( pp._find_all [ 'a', 'b', 'c', 'd', ], 'e'                                     ), []
+  # T?.eq ( pp._find_all [ 'a', 'b', 'c', 'd', 'c', ], 'c'                                ), [ 2, 4 ]
+  # _find_all: ( list, value ) ->
+  #   ### TAINT comments to https://stackoverflow.com/a/20798567/7568091 suggest for-loop may be faster ###
+  #   R   = []
+  #   idx = -1
+  #   R.push idx while ( idx = list.indexOf value, idx + 1 ) > -1
+  #   return R
 
 
