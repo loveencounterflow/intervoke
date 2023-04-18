@@ -39,19 +39,25 @@ vocabulary  =
   #---------------------------------------------------------------------------------------------------------
   parse: ( sentence ) ->
     words           = sentence.split '_'
-    element_clauses = @_find_element_clauses words
     # debug '^99-1^', element_clauses
     alternatives    = []
     R               = { alternatives, optional: false, }
     for phrase from @_walk_alternative_phrases words
-      #.....................................................................................................
-      noun          = phrase.at -1
-      noun_entry    = @_get_vocabulary_entry phrase, noun, 'noun'
-      #.....................................................................................................
-      ### NOTE not entirely correct, must look for 'of' ###
-      adjectives    = @_get_adjectives R, phrase
-      alternative   = { noun, adjectives, }
-      alternatives.push alternative
+      depth = -1
+      for element_clause from @_walk_element_clauses phrase
+        debug '^4534^', sentence, ( GUY.trm.green depth ), GUY.trm.gold element_clause
+        depth++
+        # unless depth is 0
+        #...................................................................................................
+        { phrase }    = element_clause
+        throw new E.Empty_alternative_phrase '^Phrase_parser.parse^', sentence if phrase.length is 0
+        noun          = phrase.at -1
+        noun_entry    = @_get_vocabulary_entry phrase, noun, 'noun'
+        #...................................................................................................
+        ### NOTE not entirely correct, must look for 'of' ###
+        adjectives    = @_get_adjectives R, phrase
+        alternative   = { noun, adjectives, }
+        alternatives.push alternative
     return R
 
   #---------------------------------------------------------------------------------------------------------
