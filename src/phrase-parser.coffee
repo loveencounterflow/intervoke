@@ -98,7 +98,7 @@ vocabulary  =
         continue
       @_get_vocabulary_entry phrase, adjective, 'adjective'
       R.push adjective
-      return R
+    return R
 
   #---------------------------------------------------------------------------------------------------------
   _find_element_clauses: ( words ) ->
