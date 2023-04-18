@@ -104,6 +104,9 @@ vocabulary  =
   _find_element_clauses: ( words ) ->
     R = { phrase: [], }
     for word, idx in words
+      if word is 'or'
+        clause = words.join '_'
+        throw new E.Not_allowed_to_use_or_in_element_clause '^Phrase_parser._find_element_clauses^', clause
       if word is 'of'
         R.elements = @_find_element_clauses words[ idx + 1 .. ]
         return R
