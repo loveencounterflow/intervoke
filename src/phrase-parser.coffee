@@ -13,9 +13,11 @@ GUY                       = require 'guy'
   help }                  = GUY.trm.get_loggers 'INTERVOKE/PROMPT-PARSER'
 { rpr }                   = GUY.trm
 { get_base_types }        = require './types'
+E                         = require './errors'
 
 
 
+#===========================================================================================================
 vocabulary  =
   of:       { role: 'of',         }
   or:       { role: 'or',         }

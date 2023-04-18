@@ -12,37 +12,7 @@ GUY                       = require 'guy'
   help }                  = GUY.trm.get_loggers 'INTERVOKE'
 { rpr }                   = GUY.trm
 { get_base_types }        = require './types'
-
-
-#-----------------------------------------------------------------------------------------------------------
-### TAINT move this to Guy ###
-class Guy_error_base_class extends Error
-  constructor: ( ref, message ) ->
-    super()
-    if ref is null
-      @message  = message
-      return undefined
-    @message  = "#{ref} (#{@constructor.name}) #{message}"
-    @ref      = ref
-    return undefined ### always return `undefined` from constructor ###
-
-#-----------------------------------------------------------------------------------------------------------
-class Wrong_use_of_abstract_base_class_method extends Guy_error_base_class
-  constructor: ( ref, instance, method_name )     ->
-    class_name = instance.constructor.name
-    super ref, "not allowed to call method #{rpr method_name} of abstract base class #{rpr class_name}"
-
-#-----------------------------------------------------------------------------------------------------------
-class Not_allowed_to_redeclare extends Guy_error_base_class
-  constructor: ( ref, accessor ) -> super ref, "property #{rpr accessor} already declared"
-
-#-----------------------------------------------------------------------------------------------------------
-class Unknown_accessor extends Guy_error_base_class
-  constructor: ( ref, accessor ) -> super ref, "property #{rpr accessor} is unknown"
-
-#-----------------------------------------------------------------------------------------------------------
-class Not_allowed_to_use_undeclared extends Guy_error_base_class
-  constructor: ( ref, accessor ) -> super ref, "wrong use of undeclared property #{rpr accessor}"
+E                         = require './errors'
 
 
 #===========================================================================================================
@@ -58,7 +28,7 @@ class Not_allowed_to_use_undeclared extends Guy_error_base_class
       return target[ accessor ] if ( typeof accessor ) isnt 'string'
       return target[ accessor ] if accessor.startsWith '_'
       return ( target.__get_handler accessor ) if Reflect.has target, '__get_handler'
-      throw new Unknown_accessor '^Prompter.proxy.get^', accessor
+      throw new E.Unknown_accessor '^Prompter.proxy.get^', accessor
 
   #---------------------------------------------------------------------------------------------------------
   constructor: ->
@@ -97,7 +67,7 @@ class Not_allowed_to_use_undeclared extends Guy_error_base_class
   #---------------------------------------------------------------------------------------------------------
   __declare: ( accessor, handler ) ->
     ### Associate an accessor with a handler method: ###
-    throw new Not_allowed_to_redeclare '^__declare@1^', accessor if Reflect.has @, accessor
+    throw new E.Not_allowed_to_redeclare '^__declare@1^', accessor if Reflect.has @, accessor
     @__accessors.add accessor
     @__nameit accessor, handler
     GUY.props.hide @, accessor, handler
@@ -113,7 +83,7 @@ class Not_allowed_to_use_undeclared extends Guy_error_base_class
 
   # #---------------------------------------------------------------------------------------------------------
   # __get_ncc_and_phrase: ( accessor ) ->
-  #   throw new Error "__get_ncc_and_phrase() under construction"
+  #   throw new E.Error "__get_ncc_and_phrase() under construction"
   #   ### Given an accessor (string), return its normalized version (NCC) and the corresponding phrase: ###
   #   phrase  = accessor.split /[\s_]+/u
   #   ncc     = phrase.join '_'
@@ -140,5 +110,5 @@ class Not_allowed_to_use_undeclared extends Guy_error_base_class
 
   #---------------------------------------------------------------------------------------------------------
   __create_handler: ( accessor ) ->
-    throw new Not_allowed_to_use_undeclared '^Word_prompter.__create_handler^', @, accessor
+    throw new E.Not_allowed_to_use_undeclared '^Word_prompter.__create_handler^', @, accessor
 
