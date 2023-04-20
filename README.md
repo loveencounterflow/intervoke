@@ -198,11 +198,11 @@ nonempty_list_of_positive_integers_or_nonempty_text
 * An AST is an object with a two properties, `alternatives` and `optional`.
 * `alternatives` is a non-empty list of `or` clauses ('alternatives'); in case no `or` was used, the list
   will hold a single clause.
-* Each clause
-  * `noun` (which names the type);
-  * zero or more `adjectives`, and
-  * one optional `elements` sub-clause (initiated by the `of` connective) which in itself is a clause and
-    may have its own `elements` sub-clause.
+* Each clause has
+  * a mandatory `noun` (a string which names the type);
+  * an optional list of `adjectives` (missing where not needed), and
+  * an optional `elements` sub-clause (initiated by the `of` connective) which in itself is a clause (and
+    may have its own `elements` sub-clause). Like `adjectives`, `elements` will be absent where not needed.
 * `optional` is `true` if any alternative clause had optional in it, and `false` otherwise.
 
 > *Note* we do not currently support alternatives in `elements` sub-clauses; if that should be implemented,
@@ -212,8 +212,7 @@ nonempty_list_of_positive_integers_or_nonempty_text
 ```js
 element_clause = {
   noun:         'integer',
-  adjectives:   [ 'positive0', ],
-  elements:     null, }
+  adjectives:   [ 'positive0', ], }
 
 clause = {
   noun:         'list',
@@ -251,6 +250,9 @@ not change in the plural, as many English nouns like *deer* and *aricraft* do).
   implementationally simpler than literal translations (eg. in `isa.empty_list x`, it will be simpler to
   check first for `Array.isArray x`, then for `x.length is 0` instead of dealing with the different ways
   that emptiness can be detected in JS (`x.length`, `x.size`, ...))
+* **[–]** clarify terms *clause*, *phrase*, *adjunct*, *sentence* and so on; also, all of these terms may be
+  applied to strings of underscore-separated words as well as lists of words (so maybe always use
+  `phrase_txt` vs `phrase_lst` &c).
 
 ## Is Done
 
