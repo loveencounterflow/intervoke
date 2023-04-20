@@ -274,7 +274,10 @@ not change in the plural, as many English nouns like *deer* and *aricraft* do).
 * **[–]** clarify terms *clause*, *phrase*, *adjunct*, *sentence* and so on; also, all of these terms may be
   applied to strings of underscore-separated words as well as lists of words (so maybe always use
   `phrase_txt` vs `phrase_lst` &c).
-* **[–]** implement phrase highlighting to be used in error messages \&amp;
+* **[–]** implement phrase highlighting to be used in error messages \&c; use four colors to distinguish
+  **(1)** (green💚) tested and OK, **(2)** (red🍅) tested and not OK, **(1)** (yellow🍋) not tested, (blue🔵)
+  for structural parts. Example `isa.nonempty_list_of_positive_integers [ -4, ]` should give
+  `💚nonempty💚_💚list💚_🔵of🔵_🍅positive🍅_💚integers💚`
 
 ## Is Done
 
