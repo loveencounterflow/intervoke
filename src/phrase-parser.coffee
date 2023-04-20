@@ -45,8 +45,8 @@ vocabulary  =
     for phrase from @_walk_alternative_phrases words
       depth = -1
       for element_clause from @_walk_element_clauses phrase
-        debug '^4534^', sentence, ( GUY.trm.green depth ), GUY.trm.gold element_clause
         depth++
+        debug '^4534^', sentence, ( GUY.trm.green depth ), GUY.trm.gold element_clause
         # unless depth is 0
         #...................................................................................................
         { phrase }    = element_clause
@@ -55,9 +55,12 @@ vocabulary  =
         noun_entry    = @_get_vocabulary_entry phrase, noun, 'noun'
         #...................................................................................................
         ### NOTE not entirely correct, must look for 'of' ###
-        adjectives    = @_get_adjectives R, phrase
-        alternative   = { noun, adjectives, }
-        alternatives.push alternative
+        alternative             = { noun, }
+        adjectives              = @_get_adjectives R, phrase
+        urge '^3324^', GUY.trm.green alternative, element_clause
+        alternative.adjectives  = adjectives if adjectives.length > 0
+        alternative.elements    = element_clause.elements if element_clause.elements?
+        alternatives.push alternative if depth is 0
     return R
 
   #---------------------------------------------------------------------------------------------------------
