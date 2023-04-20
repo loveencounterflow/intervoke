@@ -277,7 +277,8 @@ not change in the plural, as many English nouns like *deer* and *aricraft* do).
 * **[–]** implement phrase highlighting to be used in error messages \&c; use four colors to distinguish
   **(1)** (green💚) tested and OK, **(2)** (red🍅) tested and not OK, **(1)** (yellow🍋) not tested, (blue🔵)
   for structural parts. Example `isa.nonempty_list_of_positive_integers [ -4, ]` should give
-  `💚nonempty💚_💚list💚_🔵of🔵_🍅positive🍅_💚integers💚`
+  `💚nonempty💚_💚list💚_🔵of🔵_🍅positive🍅_💚integers💚` with reverse-colored stretches; `isa.optional_list null`
+  should give `💚optional💚_🍋list🍋`.
 
 ## Is Done
 
