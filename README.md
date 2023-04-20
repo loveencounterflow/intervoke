@@ -274,7 +274,7 @@ not change in the plural, as many English nouns like *deer* and *aricraft* do).
 * **[–]** clarify terms *clause*, *phrase*, *adjunct*, *sentence* and so on; also, all of these terms may be
   applied to strings of underscore-separated words as well as lists of words (so maybe always use
   `phrase_txt` vs `phrase_lst` &c).
-* **[–]** implement phrase highlighting to be used in error messages &c;
+* **[–]** implement phrase highlighting to be used in error messages &amp;
 
 ## Is Done
 
