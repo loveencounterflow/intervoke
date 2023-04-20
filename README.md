@@ -139,12 +139,12 @@ into 'intervocations', in a manner of speaking. Thanks ChatGPT!
 
 nonempty_list_of_positive_integers_or_nonempty_text
 
-│ collection│    │ elements      │    │           │
-│ phrase 1.1│    │ phrase 1.2    │    │           │
+│(top)      │    │ (elements)    │    │(top)      │
+│complement │    │ complement    │    │complement │
 └───────────┘    └───────────────┘    │           │
 │           │    adjunct         │    │           │
 │           └────────────────────┘    │           │
-│            phrase 1            │    │  phrase 2 │
+│            disjunct            │    │  disjunct │
 └────────────────────────────────┘    └───────────┘
 │                    sentence                     │
 └─────────────────────────────────────────────────┘
@@ -255,8 +255,15 @@ not change in the plural, as many English nouns like *deer* and *aricraft* do).
 * **Disjunct**: "The conjuncts of the conjunction ‘or’ are called disjuncts¹. They are words or phrases that
   are connected by ‘or’ and express a choice or an alternative between them. For example, in the sentence
   “You can have tea or coffee”, tea and coffee are disjuncts of the conjunction ‘or’. [//] 1.
-  [en.wikipedia.org](https://en.wikipedia.org/wiki/Conjunction_(grammar))"–[*Bing AI -
-  Search*](https://www.bing.com/search?form=MY0291&OCID=MY0291&q=Bing+AI&showconv=1)
+  [en.wikipedia.org](https://en.wikipedia.org/wiki/Conjunction_(grammar))"–[*Bing AI
+  Chat*](https://www.bing.com/chat)
+
+* **Complement**: The adjectives and nouns of a declaration: "The part after ‘is’ in the sentence ‘x is a
+  list of positive integers’ is called a subject complement¹. A subject complement is a word or phrase that
+  follows a linking verb (such as ‘is’) and describes or identifies the subject. For example, in the
+  sentence “She is a teacher”, teacher is a subject complement that identifies she. In your sentence, ‘a
+  list of positive integers’ is a subject complement that describes x."—[*Bing
+  AI Chat*](https://www.bing.com/chat)
 
 ## Attribution
 
