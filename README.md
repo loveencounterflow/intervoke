@@ -12,7 +12,6 @@
 - [Purpose](#purpose)
 - [Motivation](#motivation)
 - [Name](#name)
-- [Glossary](#glossary)
 - [Notes](#notes)
 - [Derived Classes](#derived-classes)
   - [Word Prompter](#word-prompter)
@@ -21,6 +20,7 @@
   - [Sentence Structure Diagram](#sentence-structure-diagram)
   - [AST Data Structure](#ast-data-structure)
   - [Plural Nouns](#plural-nouns)
+- [Glossary](#glossary)
 - [Attribution](#attribution)
 - [To Do](#to-do)
 - [Is Done](#is-done)
@@ -62,39 +62,6 @@ The name 'InterVoke' is both in line with my `/^inter[a-z]+$/` line of packages 
 symbolizes quite nicely that this library is all about intercepting method invocations—turning 'invocations'
 into 'intervocations', in a manner of speaking. Thanks ChatGPT!
 
-
-## Glossary
-
-* **Prompter**: a `class Pr extends Prompter` that instantiates `pr = new Pr()` as a function which allows
-  to be accessed in two ways: classical `pr 'acc', p, q, r...` or compressed `pr.acc p, q, r...`
-* **Accessor**: the key used as first argument to access an attributor as in `pr.acc()`, sometimes
-  symbolized as `acc`
-<!--
-* **Phrase**: list of 'words'/keys resulting from splitting the accessor by whitespace and underscores. This
-  allows to build complex accessors like `isa.text_or_integer 42` (phrase: `[ 'text', 'or', 'integer', ]`)
- -->
-* **Details**: arguments used in a attributor after the accessor. Ex.: In `pr.foo_bar 3, 4, 5`, `foo_bar` is
-  the accessor key, `[ 'foo', 'bar', ]` is the accessor phrase, and `3, 4, 5` are the accessor details.
-
-* **Adjunct**: the part(s) of a declaration that come after the noun and the introductory `of`, as in e.g.
-  `list_of_integers`. When `isa.list_of_integers x` is called, it will hold when `x` is indeed a list; the
-  adjunct, `of_integers`, will hold if each element of that list, if any, is an integer.
-
-  "[A]n adjunct is an optional, or structurally dispensable, part of a sentence, clause, or phrase that, if
-  removed or discarded, will not structurally affect the remainder of the sentence.[It is] a modifying form,
-  word, or phrase that depends on another form, word, or phrase [...] The adjuncts of a predicate [...]
-  provide auxiliary information about the core [...]
-  meaning"—[*Wikipedia*](https://en.wikipedia.org/wiki/Adjunct_(grammar))
-
-* **Conjunct**: "In grammar, a conjunction (abbreviated conj or cnj) is a part of speech that connects
-  words, phrases, or clauses that are called the *conjuncts* of the
-  conjunctions."—[*Wikipedia*](https://en.wikipedia.org/wiki/Conjunction_(grammar))
-
-* **Disjunct**: "The conjuncts of the conjunction ‘or’ are called disjuncts¹. They are words or phrases that
-  are connected by ‘or’ and express a choice or an alternative between them. For example, in the sentence
-  “You can have tea or coffee”, tea and coffee are disjuncts of the conjunction ‘or’. [//] 1.
-  [en.wikipedia.org](https://en.wikipedia.org/wiki/Conjunction_(grammar))"–[*Bing AI -
-  Search*](https://www.bing.com/search?form=MY0291&OCID=MY0291&q=Bing+AI&showconv=1)
 
 
 ## Notes
@@ -257,6 +224,39 @@ their singular equivalent (because of this, there's a borderline case when you d
 as singular nouns and then use a phrase like `list_of_foos` which will be normalized to `list_of_foo`; in
 order to get an adjunct with `foos`, one has to either write `list_of_fooses` or declare `foo` and `foos` to
 not change in the plural, as many English nouns like *deer* and *aricraft* do).
+
+## Glossary
+
+* **Prompter**: a `class Pr extends Prompter` that instantiates `pr = new Pr()` as a function which allows
+  to be accessed in two ways: classical `pr 'acc', p, q, r...` or compressed `pr.acc p, q, r...`
+* **Accessor**: the key used as first argument to access an attributor as in `pr.acc()`, sometimes
+  symbolized as `acc`
+<!--
+* **Phrase**: list of 'words'/keys resulting from splitting the accessor by whitespace and underscores. This
+  allows to build complex accessors like `isa.text_or_integer 42` (phrase: `[ 'text', 'or', 'integer', ]`)
+ -->
+* **Details**: arguments used in a attributor after the accessor. Ex.: In `pr.foo_bar 3, 4, 5`, `foo_bar` is
+  the accessor key, `[ 'foo', 'bar', ]` is the accessor phrase, and `3, 4, 5` are the accessor details.
+
+* **Adjunct**: the part(s) of a declaration that come after the noun and the introductory `of`, as in e.g.
+  `list_of_integers`. When `isa.list_of_integers x` is called, it will hold when `x` is indeed a list; the
+  adjunct, `of_integers`, will hold if each element of that list, if any, is an integer.
+
+  "[A]n adjunct is an optional, or structurally dispensable, part of a sentence, clause, or phrase that, if
+  removed or discarded, will not structurally affect the remainder of the sentence.[It is] a modifying form,
+  word, or phrase that depends on another form, word, or phrase [...] The adjuncts of a predicate [...]
+  provide auxiliary information about the core [...]
+  meaning"—[*Wikipedia*](https://en.wikipedia.org/wiki/Adjunct_(grammar))
+
+* **Conjunct**: "In grammar, a conjunction (abbreviated conj or cnj) is a part of speech that connects
+  words, phrases, or clauses that are called the *conjuncts* of the
+  conjunctions."—[*Wikipedia*](https://en.wikipedia.org/wiki/Conjunction_(grammar))
+
+* **Disjunct**: "The conjuncts of the conjunction ‘or’ are called disjuncts¹. They are words or phrases that
+  are connected by ‘or’ and express a choice or an alternative between them. For example, in the sentence
+  “You can have tea or coffee”, tea and coffee are disjuncts of the conjunction ‘or’. [//] 1.
+  [en.wikipedia.org](https://en.wikipedia.org/wiki/Conjunction_(grammar))"–[*Bing AI -
+  Search*](https://www.bing.com/search?form=MY0291&OCID=MY0291&q=Bing+AI&showconv=1)
 
 ## Attribution
 
