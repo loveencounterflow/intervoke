@@ -51,7 +51,7 @@ vocabulary  =
         #...................................................................................................
         { phrase }    = element_clause
         if phrase.length is 0
-          throw new E.Empty_alternative_phrase '^Phrase_parser.parse@1^', sentence
+          throw new E.Empty_alternative_clause '^Phrase_parser.parse@1^', sentence
         noun          = phrase.at -1
         noun_entry    = @_get_vocabulary_entry phrase, noun, 'noun'
         #...................................................................................................
@@ -93,7 +93,7 @@ vocabulary  =
     for disjunct_lst from @_$walk_disjuncts words
       if disjunct_lst.length is 0
         declaration = words.join ' '
-        throw new Error "empty alternative clause in declaration #{rpr declaration}"
+        throw new E.Empty_alternative_clause '^Phrase_parser._walk_disjuncts@1^', declaration
       yield disjunct_lst
     return null
 
@@ -101,10 +101,10 @@ vocabulary  =
   _get_vocabulary_entry: ( phrase, word, role = null ) ->
     unless ( R = vocabulary[ word ] )?
       phrase_txt = phrase.join '_'
-      throw new Error "word #{rpr word} in phrase #{rpr phrase_txt} is unknown"
+      throw new E.Undeclared_word '^Phrase_parser._get_vocabulary_entry@1^', phrase_txt, word
     if role? and R.role isnt role
       phrase_txt = phrase.join '_'
-      throw new Error "expected word #{rpr word} in phrase #{rpr phrase_txt} to have role #{rpr role} but is declared to be #{rpr R.role}"
+      throw new E.Wrong_role '^Phrase_parser._get_vocabulary_entry@1^', phrase_txt, word, role, R.role
     return R
 
   #---------------------------------------------------------------------------------------------------------
@@ -115,7 +115,7 @@ vocabulary  =
       if adjective is 'optional'
         unless idx is 0
           phrase_txt = phrase.join '_'
-          throw new Error "expected 'optional' to occur as first word in phrase, got #{rpr phrase_txt}"
+          throw new E.Optional_not_first '^Phrase_parser._get_adjectives@1', phrase_txt
         ast.optional = true
         continue
       @_get_vocabulary_entry phrase, adjective, 'adjective'

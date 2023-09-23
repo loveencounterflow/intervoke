@@ -41,6 +41,10 @@ class @Unknown_accessor extends @Guy_error_base_class
   constructor: ( ref, accessor ) -> super ref, "property #{rpr accessor} is unknown"
 
 #-----------------------------------------------------------------------------------------------------------
+class @Undeclared_word extends @Guy_error_base_class
+  constructor: ( ref, sentence, word ) -> super ref, "word #{rpr word} is unknown in #{rpr sentence}"
+
+#-----------------------------------------------------------------------------------------------------------
 class @Not_allowed_to_use_undeclared extends @Guy_error_base_class
   constructor: ( ref, accessor ) -> super ref, "wrong use of undeclared property #{rpr accessor}"
 
@@ -49,8 +53,18 @@ class @Not_allowed_to_use_or_in_element_clause extends @Guy_error_base_class
   constructor: ( ref, clause ) -> super ref, "wrong use of 'or' in element clause #{rpr clause}"
 
 #-----------------------------------------------------------------------------------------------------------
-class @Empty_alternative_phrase extends @Guy_error_base_class
-  constructor: ( ref, sentence ) -> super ref, "unexpected empty alternative phrase in #{rpr sentence}"
+class @Empty_alternative_clause extends @Guy_error_base_class
+  constructor: ( ref, sentence ) -> super ref, "unexpected empty alternative clause in #{rpr sentence}"
+
+#-----------------------------------------------------------------------------------------------------------
+class @Wrong_role extends @Guy_error_base_class
+  constructor: ( ref, phrase, word, is_role, expect_role ) -> super ref, \
+    "expected word #{rpr word} in phrase #{rpr phrase} to have role #{rpr is_role} but is declared to be #{rpr expect_role}"
+
+#-----------------------------------------------------------------------------------------------------------
+class @Optional_not_first extends @Guy_error_base_class
+  constructor: ( ref, sentence ) -> super ref, \
+    "expected 'optional' to occur as first word in phrase, got #{rpr sentence}"
 
 #-----------------------------------------------------------------------------------------------------------
 class @Nested_elements_clause extends @Guy_error_base_class
