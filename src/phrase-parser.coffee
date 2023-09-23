@@ -28,6 +28,7 @@ vocabulary  =
   positive: { role: 'adjective',  }
   negative: { role: 'adjective',  }
   #.......................................................................................................
+  set:      { role: 'noun', adjectives: [ 'empty', 'nonempty',      ], }
   text:     { role: 'noun', adjectives: [ 'empty', 'nonempty',      ], }
   list:     { role: 'noun', adjectives: [ 'empty', 'nonempty',      ], }
   integer:  { role: 'noun', adjectives: [ 'positive', 'negative',   ], }
@@ -41,13 +42,16 @@ vocabulary  =
     words           = sentence.split '_'
     alternatives    = []
     R               = { alternatives, optional: false, }
+    has_container   = false
+    #.......................................................................................................
     for disjunct from @_walk_disjuncts words
       depth = -1
       for element_clause from @_walk_element_clauses disjunct
         depth++
         #...................................................................................................
         { phrase }    = element_clause
-        throw new E.Empty_alternative_phrase '^Phrase_parser.parse@1^', sentence if phrase.length is 0
+        if phrase.length is 0
+          throw new E.Empty_alternative_phrase '^Phrase_parser.parse@1^', sentence
         noun          = phrase.at -1
         noun_entry    = @_get_vocabulary_entry phrase, noun, 'noun'
         #...................................................................................................
@@ -55,12 +59,20 @@ vocabulary  =
         adjectives              = @_get_adjectives R, phrase
         alternative.adjectives  = adjectives if adjectives.length > 0
         if element_clause.elements?
-          throw new E.Nested_elements_clause '^Phrase_parser.parse@1^', sentence if element_clause.elements.elements?
+          if element_clause.elements.elements?
+            throw new E.Nested_elements_clause '^Phrase_parser.parse@2^', sentence
+          has_container                   = true
           { phrase: lphrase }             = element_clause.elements
           ladjectives                     = @_get_adjectives R, lphrase
           alternative.elements            = { noun: ( lphrase.at -1 ), }
           alternative.elements.adjectives = ladjectives if ladjectives.length > 0
         alternatives.push alternative if depth is 0
+    #.......................................................................................................
+    if has_container and R.alternatives.length > 1
+      throw new E.Container_with_alternatives '^Phrase_parser.parse@3^', sentence
+    # help '^Phrase_parser.parse@2^', rpr sentence
+    # debug '^Phrase_parser.parse@2^', { has_container, }, R.alternatives.length
+    #.......................................................................................................
     return R
 
   #---------------------------------------------------------------------------------------------------------

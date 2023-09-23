@@ -55,3 +55,7 @@ class @Empty_alternative_phrase extends @Guy_error_base_class
 #-----------------------------------------------------------------------------------------------------------
 class @Nested_elements_clause extends @Guy_error_base_class
   constructor: ( ref, sentence ) -> super ref, "nested containers not allowed in #{rpr sentence}"
+
+#-----------------------------------------------------------------------------------------------------------
+class @Container_with_alternatives extends @Guy_error_base_class
+  constructor: ( ref, sentence ) -> super ref, "alternatives not allowed with containers in #{rpr sentence}"
