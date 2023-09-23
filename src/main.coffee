@@ -17,7 +17,7 @@ E                         = require './errors'
 
 
 #===========================================================================================================
-@Prompter = class Prompter
+@Intervoke_proxy = class Intervoke_proxy
 
   #---------------------------------------------------------------------------------------------------------
   clasz = @
@@ -36,7 +36,7 @@ E                         = require './errors'
       if Reflect.has target, '__get_handler'
         ast = if ( Reflect.has target, '__parser' ) then target.__parser.parse accessor else null
         return ( target[ accessor ] = R ) if ( R = target.__get_handler accessor, ast )?
-      throw new E.Unknown_accessor '^Prompter/proxy.get@1^', accessor
+      throw new E.Unknown_accessor '^Intervoke_proxy/proxy.get@1^', accessor
 
   #---------------------------------------------------------------------------------------------------------
   constructor: ->
@@ -44,7 +44,7 @@ E                         = require './errors'
 
 
 #===========================================================================================================
-@Intervoke = class Intervoke extends Prompter
+@Intervoke = class Intervoke extends Intervoke_proxy
 
   #---------------------------------------------------------------------------------------------------------
   clasz = @
