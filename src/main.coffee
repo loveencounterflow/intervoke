@@ -25,6 +25,11 @@ E                         = require './errors'
   #---------------------------------------------------------------------------------------------------------
   @create_proxy: ( x ) -> new Proxy x,
     get: ( target, accessor, receiver ) ->
+      ### Return handler for given `accessor`. If instance doesn't have property `accessor` and instance has
+      `__get_handler()`, call that method with `accessor`, set property `accessor` and return handler. In
+      case instance has `__parser`, get `ast` as` `__parser.parse accessor` and call `__get_handler()` with
+      `ast` as second argument. `__get_handler()` will only be called if `accessor` is a string that does
+      not start with an underscore. ###
       return target[ accessor ] if Reflect.has target, accessor
       return target[ accessor ] if ( typeof accessor ) isnt 'string'
       return target[ accessor ] if accessor.startsWith '_'
