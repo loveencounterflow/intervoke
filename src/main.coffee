@@ -13,6 +13,7 @@ GUY                       = require 'guy'
 { rpr }                   = GUY.trm
 { get_base_types }        = require './types'
 E                         = require './errors'
+{ Phrase_parser }         = require './phrase-parser'
 
 
 #===========================================================================================================
@@ -28,7 +29,7 @@ E                         = require './errors'
       return target[ accessor ] if ( typeof accessor ) isnt 'string'
       return target[ accessor ] if accessor.startsWith '_'
       return ( target.__get_handler accessor ) if Reflect.has target, '__get_handler'
-      throw new E.Unknown_accessor '^Prompter.proxy.get^', accessor
+      throw new E.Unknown_accessor '^Prompter/proxy.get^', accessor
 
   #---------------------------------------------------------------------------------------------------------
   constructor: ->
@@ -63,6 +64,7 @@ E                         = require './errors'
     for object from @__walk_prototype_chain()
       continue unless Reflect.has object, 'declare'
       @__declare accessor, handler for accessor, handler of object.declare
+    return null
 
   #---------------------------------------------------------------------------------------------------------
   __declare: ( accessor, handler ) ->
@@ -78,8 +80,16 @@ E                         = require './errors'
 @Phrase_prompter = class Phrase_prompter extends Word_prompter
 
   #---------------------------------------------------------------------------------------------------------
+  constructor: ( cfg = null ) ->
+    super cfg
+    GUY.props.hide @, '__parser', new Phrase_parser()
+    return undefined
+
+  #---------------------------------------------------------------------------------------------------------
   __declare: ( accessor, handler ) ->
     debug '^Phrase_prompter::__declare@1^', { accessor, handler, }
+    super accessor, handler
+    return null
 
   # #---------------------------------------------------------------------------------------------------------
   # __get_ncc_and_phrase: ( accessor ) ->
@@ -95,6 +105,7 @@ E                         = require './errors'
     calling `__create_handler()` which must be declared in derived classes. When used with alternative
     accessors, care has been taken to only call `__create_handler()` once and to cache alternative accessors
     along with the normalized one. ###
+    ast = @__parser.parse accessor
     debug '^Phrase_prompter::__get_handler@1^', { accessor, ast, }
     throw new Error "__get_handler() under construction"
     return R unless ( R = @[ accessor ] ) is undefined ### NOTE repeat from proxy ###
