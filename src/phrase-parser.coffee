@@ -60,7 +60,7 @@ vocabulary  =
         alternative.adjectives  = adjectives if adjectives.length > 0
         if element_clause.elements?
           if element_clause.elements.elements?
-            throw new E.Nested_elements_clause '^Phrase_parser.parse@2^', sentence
+            throw new E.Nested_containers '^Phrase_parser.parse@2^', sentence
           has_container                   = true
           { phrase: lphrase }             = element_clause.elements
           ladjectives                     = @_get_adjectives R, lphrase

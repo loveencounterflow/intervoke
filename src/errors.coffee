@@ -67,7 +67,7 @@ class @Optional_not_first extends @Guy_error_base_class
     "expected 'optional' to occur as first word in phrase, got #{rpr sentence}"
 
 #-----------------------------------------------------------------------------------------------------------
-class @Nested_elements_clause extends @Guy_error_base_class
+class @Nested_containers extends @Guy_error_base_class
   constructor: ( ref, sentence ) -> super ref, "nested containers not allowed in #{rpr sentence}"
 
 #-----------------------------------------------------------------------------------------------------------
