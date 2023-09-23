@@ -74,7 +74,7 @@ into 'intervocations', in a manner of speaking. Thanks ChatGPT!
 
 ### Word Prompter
 
-* In it self probably not a very useful class.
+* In itself probably not a very useful class.
 * It serves a base class for [`Phrasal_prompter`](#phrasal-prompter).
 * All one can do is declaring functions either via the `declare` class property or the (private)
   `__declare()` method.
