@@ -107,7 +107,7 @@ into 'intervocations', in a manner of speaking. Thanks ChatGPT!
 * Nouns are turned into functions and made properties (of the same name) of their base object (here shown as
   `isa` for the sake of exposition); so type `integer` is accessible as mthod `isa.integer()`.
 * Adjectives are likewise turned into functions, but are made properties of the nouns they are declared on,
-  so if adjective `positive` is delcared for type `integer`, then its correlated function may be accessed as
+  so if adjective `positive` is declared for type `integer`, then its correlated function may be accessed as
   `isa.integer.positive()` (as well as by `isa.positive_integer()`).
 * `isa.empty_list x`: `isa.list.empty x`, which implictly starts with `isa.list x`
 * `isa.nonempty_list_of_positive_integers x`: `isa.list x`, then `isa.list.nonempty x`, then, for each
