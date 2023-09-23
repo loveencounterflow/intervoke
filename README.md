@@ -319,7 +319,7 @@ not change in the plural, as many English nouns like *deer* and *aricraft* do).
 * **[+]** collect all declarations in the prototype chain
 * **[+]** do not return instances-as-functions as it is a useless complication
 * **[+]** do not use phrase normalization as it is expendible. If anything, one could later support a method
-  to translate 'natural texts' like `'validate that x is an integer or a text of digits'` into very similar API calls
-  like `validate.integer_or_text_of_digits x`
+  to translate 'natural texts' like `'validate that x is an integer or a text of digits'` into very similar
+  API calls like `validate.integer_or_text_of_digits x`
 
 
