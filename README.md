@@ -15,7 +15,7 @@
 - [Notes](#notes)
 - [Derived Classes](#derived-classes)
   - [Word Prompter](#word-prompter)
-  - [Phrasal Prompter](#phrasal-prompter)
+  - [Phrase Prompter](#phrase-prompter)
   - [Generic and Specific Adjectives](#generic-and-specific-adjectives)
   - [Sentence Structure Diagram](#sentence-structure-diagram)
   - [AST Data Structure](#ast-data-structure)
@@ -75,20 +75,20 @@ into 'intervocations', in a manner of speaking. Thanks ChatGPT!
 ### Word Prompter
 
 * In itself probably not a very useful class.
-* It serves a base class for [`Phrasal_prompter`](#phrasal-prompter).
+* It serves a base class for [`Phrase_prompter`](#phrase-prompter).
 * All one can do is declaring functions either via the `declare` class property or the (private)
   `__declare()` method.
 * set class property `declare` to an object with methods that will be `__declare()`d on initialisation
 * Any access to non-declared properties will cause an error.
 
 
-### Phrasal Prompter
+### Phrase Prompter
 
 * Intended for new version of [InterType](https://github.com/loveencounterflow/intertype); the following
   notes betray that and are written with the use case of building a runtime type checking library in mind.
-* `Phrasal_prompter` is a derivative of `Word_prompter`.
-* Like `Word_prompter`, `Phrasal_prompter` too will split property names into words by splitting on
-  spaces and underscores. Unlike `Word_prompter`, `Phrasal_prompter` assumes a certain grammar for
+* `Phrase_prompter` is a derivative of `Word_prompter`.
+* Like `Word_prompter`, `Phrase_prompter` too will split property names into words by splitting on
+  spaces and underscores. Unlike `Word_prompter`, `Phrase_prompter` assumes a certain grammar for
   its accessors, here termed 'sentences' and 'phrases'.
 * Words appearing in accessors are recognized as either
   * nouns like `integer`, `list`, `text`;
@@ -223,7 +223,7 @@ ast           = { alternatives, optional: true, }
 ### Plural Nouns
 
 Since [English plural rules are far too complex](https://en.wikipedia.org/wiki/English_plurals) to be
-covered by anything less than extensive rule apparatus and long lists of special cases, `Phrasal_prompter`
+covered by anything less than extensive rule apparatus and long lists of special cases, `Phrase_prompter`
 uses a simple-minded algorithm (copied from [Sindre Sorhus' `plur`](https://github.com/sindresorhus/plur),
 re-implemented as [`GUY.str.pluralize`](https://github.com/loveencounterflow/guy#guystr)) to guess plurals
 of nouns where not explicitly given in the declaration. Use of plurals is only done for readability (so one
