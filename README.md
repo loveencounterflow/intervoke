@@ -19,7 +19,6 @@
   - [Generic and Specific Adjectives](#generic-and-specific-adjectives)
   - [Sentence Structure Diagram](#sentence-structure-diagram)
   - [AST Data Structure](#ast-data-structure)
-  - [Plural Nouns](#plural-nouns)
 - [Glossary](#glossary)
 - [Attribution](#attribution)
 - [To Do](#to-do)
@@ -220,7 +219,8 @@ alternatives  = [ clause, ]
 ast           = { alternatives, optional: true, }
 ```
 
-### Plural Nouns
+
+<!-- ### Plural Nouns
 
 Since [English plural rules are far too complex](https://en.wikipedia.org/wiki/English_plurals) to be
 covered by anything less than extensive rule apparatus and long lists of special cases, `Phrase_prompter`
@@ -232,7 +232,8 @@ can say `isa.set_of_oxen x` instead of `isa.set_of_ox x`); they are only recogni
 their singular equivalent (because of this, there's a borderline case when you declare both `foo` and `foos`
 as singular nouns and then use a phrase like `list_of_foos` which will be normalized to `list_of_foo`; in
 order to get an adjunct with `foos`, one has to either write `list_of_fooses` or declare `foo` and `foos` to
-not change in the plural, as many English nouns like *deer* and *aricraft* do).
+not change in the plural, as many English nouns like *deer* and *aricraft* do). -->
+
 
 ## Glossary
 
