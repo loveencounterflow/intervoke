@@ -87,7 +87,7 @@ E                         = require './errors'
 
 
 #===========================================================================================================
-@Phrase_prompter = class Phrase_prompter extends Intervoke
+@Intervoke_phraser = class Intervoke_phraser extends Intervoke
 
   #---------------------------------------------------------------------------------------------------------
   constructor: ( cfg = null ) ->
@@ -97,7 +97,7 @@ E                         = require './errors'
 
   #---------------------------------------------------------------------------------------------------------
   __declare: ( accessor, handler ) ->
-    debug '^Phrase_prompter::__declare@1^', { accessor, handler, }
+    debug '^Intervoke_phraser::__declare@1^', { accessor, handler, }
     super accessor, handler
     return null
 
@@ -108,7 +108,7 @@ E                         = require './errors'
     accessors, care has been taken to only call `__create_handler()` once and to cache alternative accessors
     along with the normalized one. ###
     # ast = @__parser.parse accessor
-    debug '^Phrase_prompter::__get_handler@1^', { accessor, ast, }
+    debug '^Intervoke_phraser::__get_handler@1^', { accessor, ast, }
     throw new Error "__get_handler() under construction"
     return R unless ( R = @[ accessor ] ) is undefined ### NOTE repeat from proxy ###
     #.......................................................................................................
@@ -124,5 +124,5 @@ E                         = require './errors'
 
   #---------------------------------------------------------------------------------------------------------
   __create_handler: ( accessor ) ->
-    throw new E.Not_allowed_to_use_undeclared '^Phrase_prompter::__create_handler^', @, accessor
+    throw new E.Not_allowed_to_use_undeclared '^Intervoke_phraser::__create_handler^', @, accessor
 
