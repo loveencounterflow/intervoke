@@ -18,7 +18,7 @@ E                         = require './errors'
 
 
 #===========================================================================================================
-vocabulary  =
+@sample_vocabulary  =
   # of:       { role: 'of',         }
   # or:       { role: 'or',         }
   # optional: { role: 'optional',   }
@@ -36,6 +36,9 @@ vocabulary  =
 
 #===========================================================================================================
 @Phrase_parser = class Phrase_parser
+
+  #---------------------------------------------------------------------------------------------------------
+  set_vocabulary: ( vocabulary ) -> GUY.props.hide @, 'vocabulary', vocabulary
 
   #---------------------------------------------------------------------------------------------------------
   parse: ( sentence ) ->
@@ -99,7 +102,7 @@ vocabulary  =
 
   #---------------------------------------------------------------------------------------------------------
   _get_vocabulary_entry: ( phrase, word, role = null ) ->
-    unless ( R = vocabulary[ word ] )?
+    unless ( R = @vocabulary[ word ] )?
       phrase_txt = phrase.join '_'
       throw new E.Undeclared_word '^Phrase_parser::_get_vocabulary_entry@1^', phrase_txt, word
     if role? and R.role isnt role
