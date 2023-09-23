@@ -109,10 +109,11 @@ into 'intervocations', in a manner of speaking. Thanks ChatGPT!
   so if adjective `positive` is declared for type `integer`, then its correlated function may be accessed as
   `isa.integer.positive()` (as well as by `isa.positive_integer()`).
 * `isa.empty_list x`: `isa.list.empty x`, which implictly starts with `isa.list x`
-* `isa.nonempty_list_of_positive_integers x`: `isa.list x`, then `isa.list.nonempty x`, then, for each
-  element `e`, `isa.integer.positive e`, which implictly starts with `isa.integer e`
-* `isa.nonempty_empty_list_or_nonempty_text x`: must satisfy one of `isa.list.nonempty x`,
-  `isa.text.nonempty x`
+* `isa.nonempty_list_of_positive_integer x`: `isa.list x`, then `isa.list.nonempty x`, then, for each
+  element `e`, `isa.integer_positive e`, must hold, that is, `( isa.integer e ) and ( isa.integer.positive e
+  )`
+* `isa.nonempty_list_or_nonempty_text x`: must satisfy `( ( isa.list x ) and ( isa.list.nonempty x ) ) or (
+  ( isa.text x ) and ( isa.text.nonempty x ) )`
 * `or` has lowest precedence so `isa.nonempty_empty_list_or_text x` is satisfied even when `x` is the empty
   string
 * `isa.hinky_dinky_dong x`: holds when both `isa.dong.hinky x` and `isa.dong._dinky x` hold. The call to
