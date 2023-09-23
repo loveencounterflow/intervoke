@@ -36,6 +36,22 @@ E                         = require './errors'
   constructor: ->
     return clasz.create_proxy @
 
+
+#===========================================================================================================
+@Word_prompter = class Word_prompter extends Prompter
+
+  #---------------------------------------------------------------------------------------------------------
+  clasz = @
+
+  #---------------------------------------------------------------------------------------------------------
+  constructor: ( cfg ) ->
+    super()
+    GUY.props.hide @, '__types',      get_base_types()
+    GUY.props.hide @, '__cfg',        @__types.create.word_prompter_cfg cfg
+    GUY.props.hide @, '__accessors',  new Set()
+    @__absorb_declarations()
+    return undefined
+
   #---------------------------------------------------------------------------------------------------------
   __walk_prototype_chain: ->
     R = []
@@ -46,19 +62,6 @@ E                         = require './errors'
 
   #---------------------------------------------------------------------------------------------------------
   __nameit: ( name, f ) -> Object.defineProperty f, 'name', { value: name, }; f
-
-
-#===========================================================================================================
-@Word_prompter = class Word_prompter extends Prompter
-
-  #---------------------------------------------------------------------------------------------------------
-  constructor: ( cfg ) ->
-    super()
-    GUY.props.hide @, '__types',      get_base_types()
-    GUY.props.hide @, '__cfg',        @__types.create.word_prompter_cfg cfg
-    GUY.props.hide @, '__accessors',  new Set()
-    @__absorb_declarations()
-    return undefined
 
   #---------------------------------------------------------------------------------------------------------
   __absorb_declarations: ->
