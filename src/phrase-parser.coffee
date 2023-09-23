@@ -50,7 +50,7 @@ vocabulary  =
         # unless depth is 0
         #...................................................................................................
         { phrase }    = element_clause
-        # debug '^5435^', element_clause
+        debug '^parse@1^', element_clause
         throw new E.Empty_alternative_phrase '^Phrase_parser.parse^', sentence if phrase.length is 0
         noun          = phrase.at -1
         noun_entry    = @_get_vocabulary_entry phrase, noun, 'noun'
@@ -60,8 +60,16 @@ vocabulary  =
         adjectives              = @_get_adjectives R, phrase
         # urge '^3324^', GUY.trm.green alternative, element_clause
         alternative.adjectives  = adjectives if adjectives.length > 0
-        alternative.elements    = element_clause.elements if element_clause.elements?
+        if element_clause.elements?
+          ### TAINT throw error if alternative.elements has elements ###
+          # alternative.elements    = element_clause.elements
+          { phrase: lphrase }             = element_clause.elements
+          ladjectives                     = @_get_adjectives R, lphrase
+          alternative.elements            = { noun: ( lphrase.at -1 ), }
+          alternative.elements.adjectives = ladjectives if ladjectives.length > 0
         alternatives.push alternative if depth is 0
+        debug '^parse@2^', { alternatives, }
+        debug '^parse@3^', { noun, adjectives, }
     return R
 
   #---------------------------------------------------------------------------------------------------------
@@ -80,7 +88,7 @@ vocabulary  =
   #---------------------------------------------------------------------------------------------------------
   _walk_disjuncts: ( words ) ->
     for disjunct_lst from @_$walk_disjuncts words
-      debug '^3453451^', disjunct_lst
+      debug '^_walk_disjuncts@1^', { disjunct_lst, }
       if disjunct_lst.length is 0
         debug '^989867^', words
         declaration = words.join ' '
