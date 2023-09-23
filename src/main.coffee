@@ -35,12 +35,18 @@ E                         = require './errors'
       return target[ accessor ] if accessor.startsWith '_'
       if Reflect.has target, '__get_handler'
         ast = if ( Reflect.has target, '__parser' ) then target.__parser.parse accessor else null
-        return ( target[ accessor ] = R ) if ( R = target.__get_handler accessor, ast )?
+        return undefined unless ( R = target.__get_handler accessor, ast )?
+        R = @__nameit accessor, R
+        GUY.props.hide target, accessor, R
+        return R
       throw new E.Unknown_accessor '^Intervoke_proxy/proxy.get@1^', accessor
 
   #---------------------------------------------------------------------------------------------------------
   constructor: ->
     return clasz.create_proxy @
+
+  #---------------------------------------------------------------------------------------------------------
+  __nameit: ( name, f ) -> Object.defineProperty f, 'name', { value: name, }; f
 
 
 #===========================================================================================================
@@ -65,9 +71,6 @@ E                         = require './errors'
       yield object if @__types.is_extension_of object, clasz
     yield @
     return null
-
-  #---------------------------------------------------------------------------------------------------------
-  __nameit: ( name, f ) -> Object.defineProperty f, 'name', { value: name, }; f
 
   #---------------------------------------------------------------------------------------------------------
   __absorb_declarations: ->
