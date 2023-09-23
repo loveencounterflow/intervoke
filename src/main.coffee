@@ -67,7 +67,7 @@ E                         = require './errors'
   #---------------------------------------------------------------------------------------------------------
   __declare: ( accessor, handler ) ->
     ### Associate an accessor with a handler method: ###
-    throw new E.Not_allowed_to_redeclare '^__declare@1^', accessor if Reflect.has @, accessor
+    throw new E.Not_allowed_to_redeclare '^Word_prompter::__declare@1^', accessor if Reflect.has @, accessor
     @__accessors.add accessor
     @__nameit accessor, handler
     GUY.props.hide @, accessor, handler
@@ -79,7 +79,7 @@ E                         = require './errors'
 
   #---------------------------------------------------------------------------------------------------------
   __declare: ( accessor, handler ) ->
-    debug '^54-1^', { accessor, handler, }
+    debug '^Phrase_prompter::__declare@1^', { accessor, handler, }
 
   # #---------------------------------------------------------------------------------------------------------
   # __get_ncc_and_phrase: ( accessor ) ->
@@ -95,6 +95,7 @@ E                         = require './errors'
     calling `__create_handler()` which must be declared in derived classes. When used with alternative
     accessors, care has been taken to only call `__create_handler()` once and to cache alternative accessors
     along with the normalized one. ###
+    debug '^Phrase_prompter::__get_handler@1^', { accessor, ast, }
     throw new Error "__get_handler() under construction"
     return R unless ( R = @[ accessor ] ) is undefined ### NOTE repeat from proxy ###
     #.......................................................................................................
@@ -110,5 +111,5 @@ E                         = require './errors'
 
   #---------------------------------------------------------------------------------------------------------
   __create_handler: ( accessor ) ->
-    throw new E.Not_allowed_to_use_undeclared '^Word_prompter.__create_handler^', @, accessor
+    throw new E.Not_allowed_to_use_undeclared '^Phrase_prompter::__create_handler^', @, accessor
 
