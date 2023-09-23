@@ -7,7 +7,7 @@ settings:
 dependencies:
   guy:
     specifier: ^13.7.1
-    version: 13.7.1(acorn-loose@8.3.0)(acorn-walk@8.2.0)(acorn@8.8.2)(astring@1.8.4)(chokidar@3.5.3)(dayjs@1.11.7)(tmp@0.2.1)
+    version: link:../guy
   intertype:
     specifier: ~0.119.1
     version: 0.119.1(acorn-loose@8.3.0)(acorn-walk@8.2.0)(acorn@8.8.2)(astring@1.8.4)(tmp@0.2.1)
