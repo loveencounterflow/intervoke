@@ -79,7 +79,7 @@ E                         = require './errors'
   #---------------------------------------------------------------------------------------------------------
   __declare: ( accessor, handler ) ->
     ### Associate an accessor with a handler method: ###
-    throw new E.Not_allowed_to_redeclare '^Word_prompter::__declare@1^', accessor if Reflect.has @, accessor
+    throw new E.Not_allowed_to_redeclare '^Intervoke::__declare@1^', accessor if Reflect.has @, accessor
     @__accessors.add accessor
     @__nameit accessor, handler
     GUY.props.hide @, accessor, handler
@@ -87,7 +87,7 @@ E                         = require './errors'
 
 
 #===========================================================================================================
-@Phrase_prompter = class Phrase_prompter extends Word_prompter
+@Phrase_prompter = class Phrase_prompter extends Intervoke
 
   #---------------------------------------------------------------------------------------------------------
   constructor: ( cfg = null ) ->
