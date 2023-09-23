@@ -75,7 +75,7 @@ E                         = require './errors'
 
 
 #===========================================================================================================
-@Phrasal_prompter = class Phrasal_prompter extends Word_prompter
+@Phrase_prompter = class Phrase_prompter extends Word_prompter
 
   #---------------------------------------------------------------------------------------------------------
   __declare: ( accessor, handler ) ->
