@@ -39,18 +39,14 @@ vocabulary  =
   #---------------------------------------------------------------------------------------------------------
   parse: ( sentence ) ->
     words           = sentence.split '_'
-    # debug '^99-1^', element_clauses
     alternatives    = []
     R               = { alternatives, optional: false, }
     for disjunct from @_walk_disjuncts words
       depth = -1
       for element_clause from @_walk_element_clauses disjunct
         depth++
-        # debug '^4534^', sentence, ( GUY.trm.green depth ), GUY.trm.gold element_clause
-        # unless depth is 0
         #...................................................................................................
         { phrase }    = element_clause
-        debug '^parse@1^', element_clause
         throw new E.Empty_alternative_phrase '^Phrase_parser.parse^', sentence if phrase.length is 0
         noun          = phrase.at -1
         noun_entry    = @_get_vocabulary_entry phrase, noun, 'noun'
@@ -58,18 +54,14 @@ vocabulary  =
         ### NOTE not entirely correct, must look for 'of' ###
         alternative             = { noun, }
         adjectives              = @_get_adjectives R, phrase
-        # urge '^3324^', GUY.trm.green alternative, element_clause
         alternative.adjectives  = adjectives if adjectives.length > 0
         if element_clause.elements?
           ### TAINT throw error if alternative.elements has elements ###
-          # alternative.elements    = element_clause.elements
           { phrase: lphrase }             = element_clause.elements
           ladjectives                     = @_get_adjectives R, lphrase
           alternative.elements            = { noun: ( lphrase.at -1 ), }
           alternative.elements.adjectives = ladjectives if ladjectives.length > 0
         alternatives.push alternative if depth is 0
-        debug '^parse@2^', { alternatives, }
-        debug '^parse@3^', { noun, adjectives, }
     return R
 
   #---------------------------------------------------------------------------------------------------------
@@ -88,9 +80,7 @@ vocabulary  =
   #---------------------------------------------------------------------------------------------------------
   _walk_disjuncts: ( words ) ->
     for disjunct_lst from @_$walk_disjuncts words
-      debug '^_walk_disjuncts@1^', { disjunct_lst, }
       if disjunct_lst.length is 0
-        debug '^989867^', words
         declaration = words.join ' '
         throw new Error "empty alternative clause in declaration #{rpr declaration}"
       yield disjunct_lst
