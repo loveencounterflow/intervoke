@@ -47,16 +47,15 @@ vocabulary  =
         depth++
         #...................................................................................................
         { phrase }    = element_clause
-        throw new E.Empty_alternative_phrase '^Phrase_parser.parse^', sentence if phrase.length is 0
+        throw new E.Empty_alternative_phrase '^Phrase_parser.parse@1^', sentence if phrase.length is 0
         noun          = phrase.at -1
         noun_entry    = @_get_vocabulary_entry phrase, noun, 'noun'
         #...................................................................................................
-        ### NOTE not entirely correct, must look for 'of' ###
         alternative             = { noun, }
         adjectives              = @_get_adjectives R, phrase
         alternative.adjectives  = adjectives if adjectives.length > 0
         if element_clause.elements?
-          ### TAINT throw error if alternative.elements has elements ###
+          throw new E.Nested_elements_clause '^Phrase_parser.parse@1^', sentence if element_clause.elements.elements?
           { phrase: lphrase }             = element_clause.elements
           ladjectives                     = @_get_adjectives R, lphrase
           alternative.elements            = { noun: ( lphrase.at -1 ), }

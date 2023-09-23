@@ -51,3 +51,7 @@ class @Not_allowed_to_use_or_in_element_clause extends @Guy_error_base_class
 #-----------------------------------------------------------------------------------------------------------
 class @Empty_alternative_phrase extends @Guy_error_base_class
   constructor: ( ref, sentence ) -> super ref, "unexpected empty alternative phrase in #{rpr sentence}"
+
+#-----------------------------------------------------------------------------------------------------------
+class @Nested_elements_clause extends @Guy_error_base_class
+  constructor: ( ref, sentence ) -> super ref, "nested containers not allowed in #{rpr sentence}"
