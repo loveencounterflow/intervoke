@@ -42,14 +42,15 @@ vocabulary  =
     # debug '^99-1^', element_clauses
     alternatives    = []
     R               = { alternatives, optional: false, }
-    for phrase from @_walk_alternative_phrases words
+    for disjunct from @_walk_disjuncts words
       depth = -1
-      for element_clause from @_walk_element_clauses phrase
+      for element_clause from @_walk_element_clauses disjunct
         depth++
-        debug '^4534^', sentence, ( GUY.trm.green depth ), GUY.trm.gold element_clause
+        # debug '^4534^', sentence, ( GUY.trm.green depth ), GUY.trm.gold element_clause
         # unless depth is 0
         #...................................................................................................
         { phrase }    = element_clause
+        # debug '^5435^', element_clause
         throw new E.Empty_alternative_phrase '^Phrase_parser.parse^', sentence if phrase.length is 0
         noun          = phrase.at -1
         noun_entry    = @_get_vocabulary_entry phrase, noun, 'noun'
@@ -57,31 +58,34 @@ vocabulary  =
         ### NOTE not entirely correct, must look for 'of' ###
         alternative             = { noun, }
         adjectives              = @_get_adjectives R, phrase
-        urge '^3324^', GUY.trm.green alternative, element_clause
+        # urge '^3324^', GUY.trm.green alternative, element_clause
         alternative.adjectives  = adjectives if adjectives.length > 0
         alternative.elements    = element_clause.elements if element_clause.elements?
         alternatives.push alternative if depth is 0
     return R
 
   #---------------------------------------------------------------------------------------------------------
-  _$walk_alternative_phrases: ( sentence ) ->
+  _$walk_disjuncts: ( declaration ) ->
     ### assuming no empty strings ###
-    phrase    = []
-    for word in sentence
+    disjunct_lst = []
+    for word in declaration
       if word is 'or'
-        yield phrase
-        phrase = []
+        yield disjunct_lst
+        disjunct_lst = []
         continue
-      phrase.push word
-    yield phrase
+      disjunct_lst.push word
+    yield disjunct_lst
     return null
 
   #---------------------------------------------------------------------------------------------------------
-  _walk_alternative_phrases: ( words ) ->
-    for phrase from @_$walk_alternative_phrases words
-      sentence = words.join ' '
-      throw new Error "empty alternative clause in sentence #{rpr sentence}" if phrase.length is 0
-      yield phrase
+  _walk_disjuncts: ( words ) ->
+    for disjunct_lst from @_$walk_disjuncts words
+      debug '^3453451^', disjunct_lst
+      if disjunct_lst.length is 0
+        debug '^989867^', words
+        declaration = words.join ' '
+        throw new Error "empty alternative clause in declaration #{rpr declaration}"
+      yield disjunct_lst
     return null
 
   #---------------------------------------------------------------------------------------------------------
