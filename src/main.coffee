@@ -28,7 +28,8 @@ E                         = require './errors'
       return target[ accessor ] if Reflect.has target, accessor
       return target[ accessor ] if ( typeof accessor ) isnt 'string'
       return target[ accessor ] if accessor.startsWith '_'
-      return ( target.__get_handler accessor ) if Reflect.has target, '__get_handler'
+      if Reflect.has target, '__get_handler'
+        return ( target[ accessor ] = R ) if ( R = target.__get_handler accessor )?
       throw new E.Unknown_accessor '^Prompter/proxy.get^', accessor
 
   #---------------------------------------------------------------------------------------------------------
