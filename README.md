@@ -150,6 +150,15 @@ nonempty_list_of_positive_integers_or_nonempty_text
 └─────────────────────────────────────────────────┘
 ```
 
+```
+                                   or
+         list                                  text
+nonempty                              nonempty
+              of
+                          integers
+                 positive
+```
+
 * A sentence consists of one ore more alternative (noun) phrases.
 * Multiple alternatives can be linked with the connective `or`.
 * `or` has least precedence so whatever has been said in the phrase before it has no effect on the phrase
@@ -191,7 +200,7 @@ nonempty_list_of_positive_integers_or_nonempty_text
   * an optional list of `adjectives` (missing where not needed), and
   * an optional `elements` sub-clause (initiated by the `of` connective) which in itself is a clause (and
     may have its own `elements` sub-clause). Like `adjectives`, `elements` will be absent where not needed.
-* `optional` is `true` if any alternative clause had optional in it, and `false` otherwise.
+* `optional` is `true` if `alternatives` has more than one element, and `false` otherwise.
 
 > *Note* we do not currently support alternatives in `elements` sub-clauses; if that should be implemented,
 > then the `elements` property would become a list of alternatives instead of a single clause.
@@ -248,9 +257,11 @@ not change in the plural, as many English nouns like *deer* and *aricraft* do).
   provide auxiliary information about the core [...]
   meaning"—[*Wikipedia*](https://en.wikipedia.org/wiki/Adjunct_(grammar))
 
-* **Conjunct**: "In grammar, a conjunction (abbreviated conj or cnj) is a part of speech that connects
+* **Connective**: `or` (and, if it gets implemented, `and`).
+
+* <del>**Conjunct**: "In grammar, a conjunction (abbreviated conj or cnj) is a part of speech that connects
   words, phrases, or clauses that are called the *conjuncts* of the
-  conjunctions."—[*Wikipedia*](https://en.wikipedia.org/wiki/Conjunction_(grammar))
+  conjunctions."—[*Wikipedia*](https://en.wikipedia.org/wiki/Conjunction_(grammar))</del>
 
 * **Disjunct**: "The conjuncts of the conjunction ‘or’ are called disjuncts¹. They are words or phrases that
   are connected by ‘or’ and express a choice or an alternative between them. For example, in the sentence
@@ -259,7 +270,7 @@ not change in the plural, as many English nouns like *deer* and *aricraft* do).
   Chat*](https://www.bing.com/chat)
 
 * **Complement**: The adjectives and nouns of a declaration: "The part after ‘is’ in the sentence ‘x is a
-  list of positive integers’ is called a subject complement¹. A subject complement is a word or phrase that
+  list of positive integers’ is called a subject complement. A subject complement is a word or phrase that
   follows a linking verb (such as ‘is’) and describes or identifies the subject. For example, in the
   sentence “She is a teacher”, teacher is a subject complement that identifies she. In your sentence, ‘a
   list of positive integers’ is a subject complement that describes x."—[*Bing
