@@ -14,8 +14,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "guy": "^13.6.0",
-    "intertype": "~0.119.0",
-    "moonriver": "^4.8.2"
+    "guy": "^13.7.1",
+    "intertype": "~0.119.1",
+    "moonriver": "^4.8.4"
   }
 }
