@@ -24,7 +24,7 @@ E                         = require './errors'
 
   #---------------------------------------------------------------------------------------------------------
   @create_proxy: ( x ) -> new Proxy x,
-    get: ( target, accessor, receiver ) ->
+    get: ( target, accessor, receiver ) =>
       ### Return handler for given `accessor`. If instance doesn't have property `accessor` and instance has
       `__get_handler()`, call that method with `accessor`, set property `accessor` and return handler. In
       case instance has `__parser`, get `ast` as` `__parser.parse accessor` and call `__get_handler()` with
@@ -35,10 +35,10 @@ E                         = require './errors'
       return target[ accessor ] if accessor.startsWith '_'
       if Reflect.has target, '__get_handler'
         ast = if ( Reflect.has target, '__parser' ) then target.__parser.parse accessor else null
-        return undefined unless ( R = target.__get_handler accessor, ast )?
-        R = @__nameit accessor, R
-        GUY.props.hide target, accessor, R
-        return R
+        if ( R = target.__get_handler accessor, ast )?
+          R = target.__nameit '###' + accessor, R
+          GUY.props.hide target, accessor, R
+          return R
       throw new E.Unknown_accessor '^Intervoke_proxy/proxy.get@1^', accessor
 
   #---------------------------------------------------------------------------------------------------------
@@ -84,7 +84,7 @@ E                         = require './errors'
     ### Associate an accessor with a handler method: ###
     throw new E.Not_allowed_to_redeclare '^Intervoke::__declare@1^', accessor if Reflect.has @, accessor
     @__accessors.add accessor
-    @__nameit accessor, handler
+    @__nameit @constructor.name.toLowerCase() + '_' + accessor, handler
     GUY.props.hide @, accessor, handler
     return null
 
